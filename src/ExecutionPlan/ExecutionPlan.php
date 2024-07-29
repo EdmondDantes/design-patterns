@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
 
-use IfCastle\DI\DisposableInterface;
 use IfCastle\Exceptions\UnexpectedValue;
 
-class ExecutionPlan                 implements ExecutionPlanInterface, DisposableInterface
+class ExecutionPlan                 implements ExecutionPlanInterface
 {
     /**
      * @var array<string, string[]>
@@ -53,7 +52,4 @@ class ExecutionPlan                 implements ExecutionPlanInterface, Disposabl
         
         return $this;
     }
-    
-    #[\Override]
-    public function dispose(): void {}
 }
