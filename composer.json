@@ -1,0 +1,30 @@
+{
+    "name": "ifcastle/design-patterns",
+    "description": "A library of common design patterns for building stateful server applications.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["design-patterns", "server", "stateful"],
+    "autoload": {
+        "psr-4": {
+            "IfCastle\\DesignPatterns\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IfCastle\\DesignPatterns\\": "./tests",
+            "Examples\\": "./examples"
+        }
+    },
+    "require": {
+        "ifcastle/exceptions": "^5.0",
+        "ifcastle/di": "^0.5.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.2",
+        "friendsofphp/php-cs-fixer": "^3.60",
+        "amphp/php-cs-fixer-config": "^2.1"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit ./tests"
+    }
+}
