@@ -5,7 +5,7 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 interface BeforeAfterExecutorInterface
 {
-    public function addBeforeHandler(mixed $handler): static;
-    public function addHandler(mixed $handler): static;
-    public function addAfterHandler(mixed $handler): static;
+    public function addBeforeHandler(mixed $handler, InsertPositionEnum $insertPosition = InsertPositionEnum::TO_END): static;
+    public function addHandler(mixed $handler, InsertPositionEnum $insertPosition = InsertPositionEnum::TO_END): static;
+    public function addAfterHandler(mixed $handler, InsertPositionEnum $insertPosition = InsertPositionEnum::TO_END): static;
 }

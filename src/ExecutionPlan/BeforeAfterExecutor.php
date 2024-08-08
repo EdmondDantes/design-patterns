@@ -18,18 +18,18 @@ class BeforeAfterExecutor           extends ExecutionPlan
         );
     }
     
-    public function addBeforeHandler(mixed $handler): static
+    public function addBeforeHandler(mixed $handler, InsertPositionEnum $insertPosition = InsertPositionEnum::TO_END): static
     {
-        return $this->addStageHandler(self::BEFORE, $handler);
+        return $this->addStageHandler(self::BEFORE, $handler, $insertPosition);
     }
     
-    public function addHandler(mixed $handler): static
+    public function addHandler(mixed $handler, InsertPositionEnum $insertPosition = InsertPositionEnum::TO_END): static
     {
-        return $this->addStageHandler(self::MAIN, $handler);
+        return $this->addStageHandler(self::MAIN, $handler, $insertPosition);
     }
     
-    public function addAfterHandler(mixed $handler): static
+    public function addAfterHandler(mixed $handler, InsertPositionEnum $insertPosition = InsertPositionEnum::TO_END): static
     {
-        return $this->addStageHandler(self::AFTER, $handler);
+        return $this->addStageHandler(self::AFTER, $handler, $insertPosition);
     }
 }
