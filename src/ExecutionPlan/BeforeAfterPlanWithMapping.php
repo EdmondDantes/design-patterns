@@ -5,6 +5,10 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 use IfCastle\Exceptions\BaseException;
 
+/**
+ * Organizes an execution plan where Before and After steps can be added to the established plan.
+ * The Before/After steps of the plan are guaranteed to be executed in the correct order.
+ */
 class BeforeAfterPlanWithMapping    extends ExecutionPlanWithMapping
                                     implements BeforeAfterActionInterface
 {
@@ -23,6 +27,9 @@ class BeforeAfterPlanWithMapping    extends ExecutionPlanWithMapping
         return $action . self::AFTER;
     }
     
+    /**
+     * @throws BaseException
+     */
     #[\Override]
     public function addBeforeActionHandler(
         string             $action,
