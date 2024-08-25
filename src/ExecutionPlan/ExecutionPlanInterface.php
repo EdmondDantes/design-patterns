@@ -6,5 +6,10 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 interface ExecutionPlanInterface
 {
     public function executePlan(): void;
-    public function addStageHandler(string $stage, mixed $handler, InsertPositionEnum $insertPosition = InsertPositionEnum::TO_END): static;
+    
+    public function addStageHandler(
+        string $stage,
+        mixed $handler,
+        InsertPositionEnum $insertPosition = InsertPositionEnum::TO_END
+    ): static;
 }

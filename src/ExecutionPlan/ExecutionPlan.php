@@ -38,7 +38,11 @@ class ExecutionPlan                 implements ExecutionPlanInterface
      * @throws UnexpectedValue
      */
     #[\Override]
-    public function addStageHandler(string $stage, mixed $handler, InsertPositionEnum $insertPosition = InsertPositionEnum::TO_END): static
+    public function addStageHandler(
+        string $stage,
+        mixed $handler,
+        InsertPositionEnum  $insertPosition = InsertPositionEnum::TO_END
+    ): static
     {
         if(false === array_key_exists($stage, $this->stages)) {
             throw new UnexpectedValue('$stage', $stage, 'is not a valid stage');
