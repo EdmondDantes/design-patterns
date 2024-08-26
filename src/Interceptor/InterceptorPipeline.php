@@ -3,9 +3,21 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\Interceptor;
 
-final class InterceptorPipeline     implements InterceptorPipelineInterface
+/**
+ * @template T
+ *
+ * This type of Pipeline implementation works in such a way that it allows only the substitution of arguments,
+ * but not the Target or the list of interceptors.
+ *
+ * However, any of the handlers can do the following:
+ *
+ * * Stop the execution. In this case, only the main handler, the Target, will be executed.
+ * * Throw an exception. In this case, the execution will be interrupted.
+ */
+class InterceptorPipeline           implements InterceptorPipelineInterface
 {
     protected bool $isStopped       = false;
+    protected \WeakReference|null $nextContext = null;
     
     public function __construct(
         protected object $target,
@@ -15,7 +27,7 @@ final class InterceptorPipeline     implements InterceptorPipelineInterface
     {
         foreach ($interceptors as $interceptor) {
             
-            $interceptor->intercept($this);
+            $interceptor->intercept($this->nextContext?->get() ?? $this);
             
             if ($this->isStopped) {
                 break;
@@ -23,6 +35,9 @@ final class InterceptorPipeline     implements InterceptorPipelineInterface
         }
     }
     
+    /**
+     * @return T
+     */
     #[\Override]
     public function getTarget(): object
     {
@@ -39,6 +54,8 @@ final class InterceptorPipeline     implements InterceptorPipelineInterface
     public function withArguments(array $arguments): static
     {
         $clone                      = clone $this;
+        $this->nextContext          = \WeakReference::create($clone);
+        $clone->nextContext         = null;
         $clone->arguments           = $arguments;
         return $this;
     }

@@ -21,7 +21,11 @@ Typically, such a class is available in the environment to all other dependencie
 Dependencies request the `InterceptorRegistry` class and ask it to execute interceptors based on a particular key.
 
 ```php
-$registry->runInterceptors(\Psr\Log\LoggerInterface::class, new LogMessage);
+new InterceptorPipeline(
+    $target,
+    $arguments,
+    $registry->resolveInterceptors(\Psr\Log\LoggerInterface::class)
+);
 ```
 
 ## What differences does it have?
@@ -93,5 +97,10 @@ class LoggerInterceptor implements InterceptorInterface
 
 $registry = new InterceptorRegistry;
 $registry->registerInterceptor(\Psr\Log\LoggerInterface::class, new LoggerInterceptor);
-$registry->runInterceptors(\Psr\Log\LoggerInterface::class, $target);
+
+new InterceptorPipeline(
+    new Target,
+    ['arg1', 'arg2'],
+    $registry->resolveInterceptors(\Psr\Log\LoggerInterface::class)
+);
 ```

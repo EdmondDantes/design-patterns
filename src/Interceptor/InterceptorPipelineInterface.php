@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace IfCastle\DesignPatterns\Interceptor;
 
 /**
+ * @template T
+ *
  * This type of Pipeline implementation works in such a way that it allows only the substitution of arguments,
  * but not the Target or the list of interceptors. However, any of the handlers can do the following:
  *
@@ -12,6 +14,9 @@ namespace IfCastle\DesignPatterns\Interceptor;
  */
 interface InterceptorPipelineInterface
 {
+    /**
+     * @return T
+     */
     public function getTarget(): object;
     
     public function getArguments(): array;

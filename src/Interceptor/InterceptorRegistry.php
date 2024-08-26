@@ -58,10 +58,10 @@ class InterceptorRegistry           extends Container
      * @throws UnexpectedValueType
      */
     #[\Override]
-    public function runInterceptors(string $interface, object $target, ...$arguments): void
+    public function resolveInterceptors(string $interface): array
     {
         if(false === array_key_exists($interface, $this->referenceByInterface)) {
-            return;
+            return [];
         }
         
         $interceptors               = [];
@@ -75,7 +75,7 @@ class InterceptorRegistry           extends Container
             
             $interceptors[]         = $interceptor;
         }
-        
-        new InterceptorPipeline($target, $arguments, ...$interceptors);
+
+        return $interceptors;
     }
 }
