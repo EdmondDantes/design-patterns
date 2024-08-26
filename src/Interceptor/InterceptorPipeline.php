@@ -25,12 +25,18 @@ class InterceptorPipeline           implements InterceptorPipelineInterface
         InterceptorInterface ...$interceptors
     )
     {
+        $nextContext                = $this;
+        
         foreach ($interceptors as $interceptor) {
             
-            $interceptor->intercept($this->nextContext?->get() ?? $this);
+            $interceptor->intercept($nextContext);
             
             if ($this->isStopped) {
                 break;
+            }
+            
+            if ($nextContext->nextContext !== null) {
+                $nextContext           = $nextContext->nextContext->get();
             }
         }
     }
