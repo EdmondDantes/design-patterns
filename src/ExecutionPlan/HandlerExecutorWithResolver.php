@@ -22,7 +22,7 @@ final readonly class HandlerExecutorWithResolver implements HandlerExecutorInter
         }
         
         if($handler instanceof AutoResolverInterface) {
-            $handler                = $handler->resolveDependencies($this->container);
+            $handler->resolveDependencies($this->container);
         } elseif ($handler instanceof DependencyInterface) {
             $handler                = $this->resolver->resolveDependency($handler, $this->container);
         }
