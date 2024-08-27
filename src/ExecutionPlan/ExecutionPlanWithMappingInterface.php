@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
 
-use IfCastle\DesignPatterns\HandlerWithHash\HandlerWithHashAwareInterface;
+use IfCastle\DesignPatterns\Handler\HandlerWithHashAwareInterface;
 
 interface ExecutionPlanWithMappingInterface extends ExecutionPlanInterface, HandlerWithHashAwareInterface, ExecutionPlanMutableInterface
 {

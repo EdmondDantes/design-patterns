@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
 
-use IfCastle\DesignPatterns\HandlerWithHash\HandlerWithHashInterface;
+use IfCastle\DesignPatterns\Handler\HandlerWithHashInterface;
 use IfCastle\Exceptions\BaseException;
 use IfCastle\Exceptions\UnexpectedMethodMode;
 

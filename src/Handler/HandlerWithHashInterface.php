@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace IfCastle\DesignPatterns\HandlerWithHash;
+namespace IfCastle\DesignPatterns\Handler;
 
 /**
  * ## Handler with Hash.
