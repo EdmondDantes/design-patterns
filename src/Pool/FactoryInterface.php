@@ -7,5 +7,5 @@ interface FactoryInterface
 {
     public function createObject(): object;
     
-    public function createDecorator(object $object): DecoratorInterface;
+    public function createDecorator(object $object, PoolInterface $pool): DecoratorInterface;
 }
