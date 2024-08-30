@@ -3,18 +3,20 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\Pool;
 
+use IfCastle\DI\DisposableInterface;
+
 class Pool                          implements PoolInterface
 {
     private array $borrowed         = [];
     private int   $lastBorrowAt     = 0;
     
     public function __construct(
-        protected PoolStackInterface $pool,
-        protected PoolFactoryInterface $factory,
-        protected int                $maxPoolSize,
-        protected int                $minPoolSize = 0,
-        protected int                $timeout           = -1,
-        protected int                $delayPoolReduction = 0
+        protected StackInterface   $pool,
+        protected FactoryInterface $factory,
+        protected int              $maxPoolSize,
+        protected int              $minPoolSize = 0,
+        protected int              $timeout           = -1,
+        protected int              $delayPoolReduction = 0
     ) {}
     
     protected function init(): void
@@ -36,34 +38,40 @@ class Pool                          implements PoolInterface
         
         if($this->pool->getSize() > 0) {
             $originalObject         = $this->pool->pop();
-            $usageContext           = $this->factory->createUsageContext($originalObject);
-            $this->borrowed[spl_object_id($originalObject)] = $usageContext;
+            $decorator              = $this->factory->createDecorator($originalObject);
+            $this->borrowed[spl_object_id($decorator)] = $decorator;
             
             if($this->delayPoolReduction > 0) {
                 $this->lastBorrowAt = time();
             }
             
-            return $usageContext;
+            return $decorator;
         }
         
-        $originalObject             = $this->factory->createObject();
-        $usageContext               = $this->factory->createUsageContext($originalObject);
-        $this->borrowed[spl_object_id($originalObject)] = $usageContext;
+        $decorator               = $this->factory->createDecorator($this->factory->createObject());
+        $this->borrowed[spl_object_id($decorator)] = $decorator;
         
-        return $usageContext;
+        return $decorator;
     }
     
     public function return(object $object): void
     {
         if(false === array_key_exists(spl_object_id($object), $this->borrowed)) {
+            
+            if($object instanceof DisposableInterface) {
+                $object->dispose();
+            }
+            
             return;
         }
         
-        $usageContext               = $this->borrowed[spl_object_id($object)];
         unset($this->borrowed[spl_object_id($object)]);
         
-        $originalObject             = $usageContext->getOriginalObject();
-        $usageContext->disposeContext();
+        $originalObject             = $object->getOriginalObject();
+        
+        if($object instanceof DisposableInterface) {
+            $object->dispose();
+        }
         
         //
         // Reduction algorithm:

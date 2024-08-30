@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\Pool;
 
-interface PoolFactoryInterface
+interface FactoryInterface
 {
     public function createObject(): object;
     
-    public function createUsageContext(object $object): UsageContextInterface;
+    public function createDecorator(object $object): DecoratorInterface;
 }

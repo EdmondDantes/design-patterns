@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\Pool;
 
-interface PoolStackInterface
+interface StackInterface
 {
     public function pop(): object|null;
     
