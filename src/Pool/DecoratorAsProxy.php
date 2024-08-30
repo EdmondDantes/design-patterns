@@ -14,6 +14,11 @@ final class DecoratorAsProxy implements DecoratorInterface, DisposableInterface
         $this->pool                 = \WeakReference::create($pool);
     }
     
+    public function __destruct()
+    {
+        $this->dispose();
+    }
+    
     #[\Override]
     public function getOriginalObject(): object
     {
