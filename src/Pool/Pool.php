@@ -38,7 +38,7 @@ class Pool                          implements PoolInterface
         
         if($this->pool->getSize() > 0) {
             $originalObject         = $this->pool->pop();
-            $decorator              = $this->factory->createDecorator($originalObject);
+            $decorator              = $this->factory->createDecorator($originalObject, $this);
             $this->borrowed[spl_object_id($decorator)] = $decorator;
             
             if($this->delayPoolReduction > 0) {
@@ -48,7 +48,7 @@ class Pool                          implements PoolInterface
             return $decorator;
         }
         
-        $decorator               = $this->factory->createDecorator($this->factory->createObject());
+        $decorator               = $this->factory->createDecorator($this->factory->createObject(), $this);
         $this->borrowed[spl_object_id($decorator)] = $decorator;
         
         return $decorator;
