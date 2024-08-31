@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\Pool;
 
+use IfCastle\DesignPatterns\Factory\FactoryInterface;
 use IfCastle\DI\DisposableInterface;
 
 class Pool                          implements PoolInterface
@@ -11,18 +12,19 @@ class Pool                          implements PoolInterface
     private int   $lastBorrowAt     = 0;
     
     public function __construct(
-        protected StackInterface   $pool,
-        protected FactoryInterface $factory,
-        protected int              $maxPoolSize,
-        protected int              $minPoolSize = 0,
-        protected int              $timeout           = -1,
-        protected int              $delayPoolReduction = 0
+        protected FactoryInterface          $factory,
+        protected int                       $maxPoolSize,
+        protected int                       $minPoolSize        = 0,
+        protected int                       $timeout            = -1,
+        protected int                       $delayPoolReduction = 0,
+        protected StackInterface            $stack              = new Stack(),
+        protected ReturnFactoryInterface    $returnFactory      = new ReturnFactory()
     ) {}
     
     protected function init(): void
     {
         for($i = 0; $i < $this->minPoolSize; $i++) {
-            $this->pool->push($this->factory->createObject());
+            $this->stack->push($this->factory->createObject());
         }
     }
     
@@ -32,13 +34,13 @@ class Pool                          implements PoolInterface
             return null;
         }
         
-        if($this->pool->getSize() === 0) {
+        if($this->stack->getSize() === 0) {
             $this->init();
         }
         
-        if($this->pool->getSize() > 0) {
-            $originalObject         = $this->pool->pop();
-            $decorator              = $this->factory->createDecorator($originalObject, $this);
+        if($this->stack->getSize() > 0) {
+            $originalObject         = $this->stack->pop();
+            $decorator              = $this->returnFactory->createDecorator($originalObject, $this);
             $this->borrowed[spl_object_id($decorator)] = $decorator;
             
             if($this->delayPoolReduction > 0) {
@@ -48,7 +50,7 @@ class Pool                          implements PoolInterface
             return $decorator;
         }
         
-        $decorator               = $this->factory->createDecorator($this->factory->createObject(), $this);
+        $decorator               = $this->returnFactory->createDecorator($this->factory->createObject(), $this);
         $this->borrowed[spl_object_id($decorator)] = $decorator;
         
         return $decorator;
@@ -78,20 +80,21 @@ class Pool                          implements PoolInterface
         // We don't reduce the pool size if the delay time has not expired.
         // This is necessary to avoid frequent creation and destruction of objects.
         //
-        $isReduceTimeout            = $this->lastBorrowAt === 0 || (time() - $this->lastBorrowAt) > $this->delayPoolReduction;
+        $isReduceTimeout            = $this->lastBorrowAt === 0
+                                      || (time() - $this->lastBorrowAt) > $this->delayPoolReduction;
         
-        if($this->pool->getSize() + 1 > $this->minPoolSize && $isReduceTimeout) {
+        if($this->stack->getSize() + 1 > $this->minPoolSize && $isReduceTimeout) {
             return;
         }
         
         if($originalObject !== null) {
-            $this->pool->push($originalObject);
+            $this->stack->push($originalObject);
         }
     }
     
     public function rebuild(): void
     {
-        $this->pool->clear();
+        $this->stack->clear();
         $this->borrowed             = [];
     }
     
@@ -117,6 +120,6 @@ class Pool                          implements PoolInterface
     
     public function getPoolSize(): int
     {
-        return $this->pool->getSize();
+        return $this->stack->getSize();
     }
 }
