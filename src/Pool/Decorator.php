@@ -25,7 +25,7 @@ final class Decorator               implements DecoratorInterface, DisposableInt
     }
     
     #[\Override]
-    public function getOriginalObject(): object
+    public function getOriginalObject(): object|null
     {
         return $this->originalObject;
     }
