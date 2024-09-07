@@ -8,5 +8,8 @@ use IfCastle\DI\ResolverInterface;
 
 class HandlerExecutorWithResolver extends HandlerExecutorWithResolverAbstract
 {
-    public function __construct(ContainerInterface $container, protected ResolverInterface $resolver) {}
+    public function __construct(ContainerInterface $container, protected ResolverInterface $resolver)
+    {
+        $this->container            = $container;
+    }
 }
