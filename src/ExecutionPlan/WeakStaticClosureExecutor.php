@@ -3,6 +3,18 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
 
+/**
+ * Class WeakStaticClosureExecutor
+ *
+ * Creates a handler through a static closure, with this object passed as the first argument.
+ * This way, the class allows creating handlers that do not create additional
+ * references to the $this object while still calling its internal methods through the closure.
+ *
+ * Example:
+ * ```php
+ * new WeakStaticClosureExecutor(static fn($self, $handler, $stage) => $self->handlerExecutor($handler, $stage), $this)
+ * ```
+ */
 final readonly class WeakStaticClosureExecutor implements HandlerExecutorInterface
 {
     private \WeakReference $self;
