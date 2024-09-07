@@ -12,12 +12,18 @@ use IfCastle\DI\ResolverInterface;
 
 class HandlerExecutorWithResolverAbstract implements HandlerExecutorInterface
 {
-    protected ContainerInterface $container;
+    protected ContainerInterface|\WeakReference|null $container = null;
     protected ResolverInterface $resolver;
     
     #[\Override]
     public function executeHandler(mixed $handler, string $stage): void
     {
+        $container                  = $this->container instanceof \WeakReference ? $this->container->get() : $this->container;
+        
+        if($container === null) {
+            throw new \RuntimeException('Container is not set');
+        }
+        
         if($handler instanceof InitializerInterface) {
             $handler                = $handler->executeInitializer($this->container);
         }
