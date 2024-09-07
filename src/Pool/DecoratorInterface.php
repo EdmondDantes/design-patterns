@@ -5,5 +5,5 @@ namespace IfCastle\DesignPatterns\Pool;
 
 interface DecoratorInterface
 {
-    public function getOriginalObject(): object;
+    public function getOriginalObject(): object|null;
 }
