@@ -15,6 +15,6 @@ class HandlerExecutorWithResolverSetter extends HandlerExecutorWithResolverAbstr
     
     public function setContainer(ContainerInterface $container): void
     {
-        $this->container = $container;
+        $this->container = \WeakReference::create($container);
     }
 }
