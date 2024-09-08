@@ -34,11 +34,7 @@ class ExecutionPlan                 implements ExecutionPlanInterface
     #[\Override]
     public function executePlan(): void
     {
-        $this->planExecutor->executePlanStages(
-            $this->stages,
-            fn(string $stage) => $this->currentStage = $stage,
-            $this->handlerExecutor
-        );
+        $this->planExecutor->executePlanStages($this->stages, $this->setCurrentStage(...), $this->handlerExecutor);
     }
     
     /**
@@ -68,5 +64,10 @@ class ExecutionPlan                 implements ExecutionPlanInterface
         $this->stages[$stage][]     = $handler;
         
         return $this;
+    }
+    
+    protected function setCurrentStage(string $stage): void
+    {
+        $this->currentStage         = $stage;
     }
 }
