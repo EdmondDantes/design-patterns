@@ -42,7 +42,7 @@ stop
 
 ```php
 // Example of initializing BeforeAfterPlanWithMapping with actions and handlers
-$plan = new BeforeAfterPlanWithMapping($handlerExecutor, 'myAction');
+$plan = new BeforeAfterPlanWithMapping($handlerExecutor, ['myAction']);
 
 // Adding a handler to be executed before an action
 $plan->addBeforeActionHandler('myAction', fn() => echo 'Before myAction executed');

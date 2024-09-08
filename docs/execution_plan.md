@@ -44,7 +44,7 @@ stop
 
 ```php
 // Example of initializing the ExecutionPlan with stages and handlers
-$executionPlan = new ExecutionPlan($handlerExecutor, 'stage1', 'stage2');
+$executionPlan = new ExecutionPlan($handlerExecutor, ['stage1', 'stage2']);
 
 // Adding handlers to stages
 $executionPlan->addStageHandler('stage1', fn() => echo 'Stage 1 handler executed');
