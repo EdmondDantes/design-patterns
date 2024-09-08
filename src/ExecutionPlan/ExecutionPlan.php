@@ -31,15 +31,16 @@ class ExecutionPlan                 implements ExecutionPlanInterface
     public function executePlan(): void
     {
         foreach ($this->stages as $stage => $handlers) {
+            
+            if($handlers === []) {
+                continue;
+            }
+            
             $this->currentStage = $stage;
-            $this->executeStageHandlers($stage, $handlers);
-        }
-    }
-    
-    protected function executeStageHandlers(string $stage, array $handlers): void
-    {
-        foreach ($handlers as $handler) {
-            $this->handlerExecutor->executeHandler($handler, $stage);
+            
+            foreach ($handlers as $handler) {
+                $this->handlerExecutor->executeHandler($handler, $stage);
+            }
         }
     }
     
