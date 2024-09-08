@@ -10,7 +10,7 @@ class BeforeAfterPlanWithMappingTest extends TestCase
     public function testAddActionHandler(): void
     {
         $beforeAfterPlan            = new BeforeAfterPlanWithMapping(
-            new HandlerExecutorCallable, 'first', 'second', 'third'
+            new HandlerExecutorCallable, ['first', 'second', 'third']
         );
         
         $result                     = [];

@@ -14,7 +14,7 @@ class BeforeAfterExecutor           extends ExecutionPlan
     {
         parent::__construct(
             $handlerExecutor,
-            self::BEFORE, self::MAIN, self::AFTER
+            [self::BEFORE, self::MAIN, self::AFTER]
         );
     }
     

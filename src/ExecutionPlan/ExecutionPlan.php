@@ -14,7 +14,11 @@ class ExecutionPlan                 implements ExecutionPlanInterface
     
     protected string $currentStage  = '';
     
-    public function __construct(protected readonly HandlerExecutorInterface $handlerExecutor, string ...$stages)
+    public function __construct(
+        protected readonly HandlerExecutorInterface $handlerExecutor,
+        array $stages,
+        protected readonly PlanExecutorInterface $planExecutor = new SequentialPlanExecutor
+    )
     {
         foreach ($stages as $stage) {
             $this->stages[$stage]   = [];
@@ -30,18 +34,11 @@ class ExecutionPlan                 implements ExecutionPlanInterface
     #[\Override]
     public function executePlan(): void
     {
-        foreach ($this->stages as $stage => $handlers) {
-            
-            if($handlers === []) {
-                continue;
-            }
-            
-            $this->currentStage = $stage;
-            
-            foreach ($handlers as $handler) {
-                $this->handlerExecutor->executeHandler($handler, $stage);
-            }
-        }
+        $this->planExecutor->executePlanStages(
+            $this->stages,
+            fn(string $stage) => $this->currentStage = $stage,
+            $this->handlerExecutor
+        );
     }
     
     /**

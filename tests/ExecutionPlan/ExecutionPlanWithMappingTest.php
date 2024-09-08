@@ -11,7 +11,7 @@ class ExecutionPlanWithMappingTest  extends TestCase
     public function testAddStageUniqueHandlerAndFind(): void
     {
         $executionPlan              = new ExecutionPlanWithMapping(
-            new HandlerExecutorCallable, 'first', 'second', 'third'
+            new HandlerExecutorCallable, ['first', 'second', 'third']
         );
         
         $result                     = [];

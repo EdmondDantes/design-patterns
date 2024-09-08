@@ -15,7 +15,7 @@ class ExecutionPlanTest             extends TestCase
     {
         $x                          = 1;
         
-        $executionPlan = new ExecutionPlan(new HandlerExecutorCallable, 'test1', 'test2', 'test3');
+        $executionPlan = new ExecutionPlan(new HandlerExecutorCallable, ['test1', 'test2', 'test3']);
         $executionPlan->addStageHandler('test1', function () use (&$x) {
             $x++;
         });
@@ -29,7 +29,7 @@ class ExecutionPlanTest             extends TestCase
     {
         $callOrder = [];
         
-        $executionPlan = new ExecutionPlan(new HandlerExecutorCallable, 'test1', 'test2', 'test3');
+        $executionPlan = new ExecutionPlan(new HandlerExecutorCallable, ['test1', 'test2', 'test3']);
         
         $executionPlan->addStageHandler('test1', function () use (&$callOrder) {
             $callOrder[] = 'test1';
