@@ -60,16 +60,16 @@
         },
         {
             "name": "ifcastle/exceptions",
-            "version": "v5.0.1",
+            "version": "v5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EdmondDantes/BaseException.git",
-                "reference": "c7bdd648a574e4996d48848f20f8ad8fcdbe2c45"
+                "reference": "e5146a868a0df34b0f8befaf6cfa88f196d58434"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EdmondDantes/BaseException/zipball/c7bdd648a574e4996d48848f20f8ad8fcdbe2c45",
-                "reference": "c7bdd648a574e4996d48848f20f8ad8fcdbe2c45",
+                "url": "https://api.github.com/repos/EdmondDantes/BaseException/zipball/e5146a868a0df34b0f8befaf6cfa88f196d58434",
+                "reference": "e5146a868a0df34b0f8befaf6cfa88f196d58434",
                 "shasum": ""
             },
             "require": {
@@ -98,9 +98,9 @@
             "description": "A basic library for exceptions with templates, oriented towards usage in web services",
             "support": {
                 "issues": "https://github.com/EdmondDantes/BaseException/issues",
-                "source": "https://github.com/EdmondDantes/BaseException/tree/v5.0.1"
+                "source": "https://github.com/EdmondDantes/BaseException/tree/v5.0.2"
             },
-            "time": "2024-08-31T11:48:21+00:00"
+            "time": "2024-09-08T08:11:08+00:00"
         }
     ],
     "packages-dev": [
