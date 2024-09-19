@@ -120,4 +120,42 @@ class RecursiveIteratorByIteratorWithPathTest extends TestCase
         $this->assertEquals($expectedVisitedNodes, $visitedNodes);
     }
 
+    public function testParent(): void
+    {
+        $tree                       = new NodeRecursiveIterator(
+            new Node('root', [
+                new Node('child1', [
+                    new Node('grandchild1'),
+                    new Node('grandchild2')
+                ]),
+                new Node('child2', [
+                    new Node('grandchild3'),
+                    new Node('grandchild4')
+                ]),
+            ])
+        );
+
+        $recursiveIteratorWithPath  = new RecursiveIteratorByIteratorWithPath($tree);
+        $visitedNodes               = [];
+
+        foreach ($recursiveIteratorWithPath as $node) {
+            if ($node instanceof Node) {
+                $visitedNodes[]     = $node->name;
+            }
+
+            // Test the path functionality
+            if($node->name === 'grandchild2') {
+                $this->assertEquals('child1', $recursiveIteratorWithPath->getParent()?->name);
+            } elseif ($node->name === 'grandchild4') {
+                $this->assertEquals('child2', $recursiveIteratorWithPath->getParent()?->name);
+            } elseif ($node->name === 'root') {
+                $this->assertEquals(null, $recursiveIteratorWithPath->getParent());
+            }
+        }
+
+        $expectedVisitedNodes = ['root', 'child1', 'grandchild1', 'grandchild2', 'child2', 'grandchild3', 'grandchild4'];
+
+        $this->assertEquals($expectedVisitedNodes, $visitedNodes);
+    }
+    
 }
