@@ -9,7 +9,7 @@ use IfCastle\Exceptions\UnexpectedValueType;
  * ## RecursiveIteratorByIterator
  * Recursive iterator over objects with implemented interface IteratorAggregate
  */
-class RecursiveIteratorByIterator   implements \RecursiveIterator
+class RecursiveIteratorByIterator   implements \RecursiveIterator, IteratorCloneInterface
 {
     protected \Iterator $iterator;
     
@@ -79,5 +79,18 @@ class RecursiveIteratorByIterator   implements \RecursiveIterator
     public function rewind(): void
     {
         $this->iterator->rewind();
+    }
+    
+    public function __clone(): void
+    {
+        $this->iterator             = clone $this->iterator;
+    }
+    
+    #[\Override]
+    public function cloneAndRewind(): static
+    {
+        $clone                      = clone $this;
+        $clone->rewind();
+        return $clone;
     }
 }

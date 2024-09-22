@@ -9,7 +9,10 @@ namespace IfCastle\DesignPatterns\Iterators;
  * to iterate objects recursively through a recursive iterator with the ability to get the current path from the nodes.
  * The $isSelfFirst parameter specifies that parent nodes should be used first.
  */
-class RecursiveIteratorByIteratorWithPath   implements \Iterator, IteratorWithPathInterface, IteratorParentAwareInterface
+class RecursiveIteratorByIteratorWithPath   implements \Iterator,
+                                                       IteratorWithPathInterface,
+                                                       IteratorParentAwareInterface,
+                                                       IteratorCloneInterface
 {
     /**
      * @var array<\RecursiveIterator>
@@ -178,5 +181,22 @@ class RecursiveIteratorByIteratorWithPath   implements \Iterator, IteratorWithPa
                 }
             }
         }
+    }
+    
+    public function __clone(): void
+    {
+        $this->currentIterator      = clone $this->currentIterator;
+        
+        foreach ($this->path as $key => $iterator) {
+            $this->path[$key]       = clone $iterator;
+        }
+    }
+    
+    #[\Override]
+    public function cloneAndRewind(): static
+    {
+        $clone                      = clone $this;
+        $clone->rewind();
+        return $clone;
     }
 }
