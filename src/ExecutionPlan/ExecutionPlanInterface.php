@@ -14,4 +14,8 @@ interface ExecutionPlanInterface
         mixed $handler,
         InsertPositionEnum $insertPosition = InsertPositionEnum::TO_END
     ): static;
+    
+    public function isMutable(): bool;
+    
+    public function asImmutable(): static;
 }

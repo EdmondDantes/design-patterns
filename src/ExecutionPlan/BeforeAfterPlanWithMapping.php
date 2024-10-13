@@ -37,6 +37,8 @@ class BeforeAfterPlanWithMapping    extends ExecutionPlanWithMapping
         InsertPositionEnum $insertPosition = InsertPositionEnum::TO_END
     ): static
     {
+        $this->throwIfNotMutable();
+        
         $stage                      = $this->getBeforeStage($action);
         
         if(false === array_key_exists($stage, $this->stages)) {

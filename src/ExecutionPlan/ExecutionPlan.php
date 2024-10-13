@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
 
+use IfCastle\Exceptions\LogicalException;
 use IfCastle\Exceptions\UnexpectedValue;
 
 class ExecutionPlan                 implements ExecutionPlanInterface
@@ -13,6 +14,8 @@ class ExecutionPlan                 implements ExecutionPlanInterface
     protected array $stages         = [];
     
     protected string $currentStage  = '';
+    
+    protected bool $isMutable       = true;
     
     public function __construct(
         protected readonly HandlerExecutorInterface $handlerExecutor,
@@ -39,6 +42,7 @@ class ExecutionPlan                 implements ExecutionPlanInterface
     
     /**
      * @throws UnexpectedValue
+     * @throws LogicalException
      */
     #[\Override]
     public function addStageHandler(
@@ -47,6 +51,8 @@ class ExecutionPlan                 implements ExecutionPlanInterface
         InsertPositionEnum  $insertPosition = InsertPositionEnum::TO_END
     ): static
     {
+        $this->throwIfNotMutable();
+        
         if(false === array_key_exists($stage, $this->stages)) {
             throw new UnexpectedValue('$stage', $stage, 'is not a valid stage');
         }
@@ -66,8 +72,31 @@ class ExecutionPlan                 implements ExecutionPlanInterface
         return $this;
     }
     
+    #[\Override]
+    public function isMutable(): bool
+    {
+        return $this->isMutable;
+    }
+    
+    #[\Override]
+    public function asImmutable(): static
+    {
+        $this->isMutable             = false;
+        return $this;
+    }
+    
     protected function setCurrentStage(string $stage): void
     {
         $this->currentStage         = $stage;
+    }
+    
+    /**
+     * @throws LogicalException
+     */
+    protected function throwIfNotMutable(): void
+    {
+        if(false === $this->isMutable) {
+            throw new LogicalException('The plan is not mutable');
+        }
     }
 }

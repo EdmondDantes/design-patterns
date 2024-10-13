@@ -32,6 +32,8 @@ class ExecutionPlanWithMapping      extends ExecutionPlan
         InsertPositionEnum  $insertPosition = InsertPositionEnum::TO_END
     ): static
     {
+        $this->throwIfNotMutable();
+        
         // validate action before insert
         if(false === array_key_exists($stage, $this->stages)) {
             throw new BaseException([
@@ -110,6 +112,8 @@ class ExecutionPlanWithMapping      extends ExecutionPlan
     #[\Override]
     public function removeHandlerByHash(string|int|null $hash): void
     {
+        $this->throwIfNotMutable();
+        
         if($hash === null || false === array_key_exists($hash, $this->handlers)) {
             return;
         }
