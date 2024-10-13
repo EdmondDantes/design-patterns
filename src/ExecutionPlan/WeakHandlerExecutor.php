@@ -13,17 +13,17 @@ final readonly class WeakHandlerExecutor implements HandlerExecutorInterface
     }
     
     #[\Override]
-    public function executeHandler(mixed $handler, string $stage): void
+    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): void
     {
         $executor                   = $this->executor->get();
         
         if($executor instanceof HandlerExecutorInterface) {
-            $executor->executeHandler($handler, $stage);
+            $executor->executeHandler($handler, $stage, ...$parameters);
             return;
         }
         
         if(is_callable($executor)) {
-            $executor($handler, $stage);
+            $executor($handler, $stage, ...$parameters);
         }
     }
 }

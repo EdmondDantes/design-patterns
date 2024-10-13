@@ -16,7 +16,7 @@ class HandlerExecutorWithResolverAbstract implements HandlerExecutorInterface
     protected ResolverInterface $resolver;
     
     #[\Override]
-    public function executeHandler(mixed $handler, string $stage): void
+    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): void
     {
         $container                  = $this->container instanceof \WeakReference ? $this->container->get() : $this->container;
         
@@ -36,7 +36,7 @@ class HandlerExecutorWithResolverAbstract implements HandlerExecutorInterface
 
         try {
             if($handler instanceof StageHandlerInterface) {
-                $handler->handleStage($stage);
+                $handler->handleStage($stage, ...$parameters);
             }
         } finally {
             if($handler instanceof DisposableInterface) {

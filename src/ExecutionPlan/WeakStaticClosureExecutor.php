@@ -12,7 +12,7 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
  *
  * Example:
  * ```php
- * new WeakStaticClosureExecutor(static fn($self, $handler, $stage) => $self->handlerExecutor($handler, $stage), $this)
+ * new WeakStaticClosureExecutor(static fn($self, $handler, $stage, mixed ...$parameters) => $self->handlerExecutor($handler, $stage, ...$parameters), $this)
  * ```
  */
 final readonly class WeakStaticClosureExecutor implements HandlerExecutorInterface
@@ -26,13 +26,13 @@ final readonly class WeakStaticClosureExecutor implements HandlerExecutorInterfa
     
     
     #[\Override]
-    public function executeHandler(mixed $handler, string $stage): void
+    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): void
     {
         $self                       = $this->self->get();
         $executor                   = $this->executor;
         
         if(is_callable($executor)) {
-            $executor($self, $handler, $stage);
+            $executor($self, $handler, $stage, ...$parameters);
         }
     }
 }

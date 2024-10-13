@@ -5,5 +5,5 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 interface StageHandlerInterface
 {
-    public function handleStage(string $stage): void;
+    public function handleStage(string $stage, mixed ...$parameters): void;
 }

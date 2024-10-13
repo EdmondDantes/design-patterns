@@ -5,10 +5,10 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 final class HandlerExecutorCallable implements HandlerExecutorInterface
 {
-    public function executeHandler(mixed $handler, string $stage): void
+    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): void
     {
         if(is_callable($handler)) {
-            $handler($stage);
+            $handler($stage, ...$parameters);
         }
     }
 }
