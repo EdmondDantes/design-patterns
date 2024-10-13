@@ -22,7 +22,8 @@ final class SequentialPlanExecutorWithFinal implements PlanExecutorInterface
     public function executePlanStages(
         array                    $stages,
         callable                 $stageSetter,
-        HandlerExecutorInterface $handlerExecutor
+        HandlerExecutorInterface $handlerExecutor,
+        mixed                    ...$parameters
     ): void
     {
         $finalStage                 = array_key_last($stages);
@@ -39,7 +40,7 @@ final class SequentialPlanExecutorWithFinal implements PlanExecutorInterface
                 $stageSetter($stage);
                 
                 foreach ($handlers as $handler) {
-                    $handlerExecutor->executeHandler($handler, $stage);
+                    $handlerExecutor->executeHandler($handler, $stage, ...$parameters);
                 }
             }
         } catch (\Throwable $exception) {
@@ -50,7 +51,7 @@ final class SequentialPlanExecutorWithFinal implements PlanExecutorInterface
         
         foreach ($finalHandlers as $handler) {
             try {
-                $handlerExecutor->executeHandler($handler, $finalStage);
+                $handlerExecutor->executeHandler($handler, $finalStage, ...$parameters);
             } catch (\Throwable $exception) {
                 $errors[]           = $exception;
             }

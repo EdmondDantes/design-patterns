@@ -7,7 +7,7 @@ interface ExecutionPlanInterface
 {
     public function getCurrentStage(): string;
     
-    public function executePlan(): void;
+    public function executePlan(mixed ...$parameters): void;
     
     public function addStageHandler(
         string $stage,

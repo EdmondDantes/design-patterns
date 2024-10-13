@@ -32,9 +32,9 @@ class ExecutionPlan                 implements ExecutionPlanInterface
     }
     
     #[\Override]
-    public function executePlan(): void
+    public function executePlan(mixed ...$parameters): void
     {
-        $this->planExecutor->executePlanStages($this->stages, $this->setCurrentStage(...), $this->handlerExecutor);
+        $this->planExecutor->executePlanStages($this->stages, $this->setCurrentStage(...), $this->handlerExecutor, ...$parameters);
     }
     
     /**
