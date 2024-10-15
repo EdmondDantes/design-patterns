@@ -26,13 +26,15 @@ final readonly class WeakStaticClosureExecutor implements HandlerExecutorInterfa
     
     
     #[\Override]
-    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): void
+    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): mixed
     {
         $self                       = $this->self->get();
         $executor                   = $this->executor;
         
         if(is_callable($executor)) {
-            $executor($self, $handler, $stage, ...$parameters);
+            return $executor($self, $handler, $stage, ...$parameters);
         }
+        
+        return null;
     }
 }

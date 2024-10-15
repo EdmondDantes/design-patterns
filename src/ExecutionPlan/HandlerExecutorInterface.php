@@ -5,5 +5,5 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 interface HandlerExecutorInterface
 {
-    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): void;
+    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): mixed;
 }

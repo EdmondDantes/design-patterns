@@ -16,7 +16,7 @@ class HandlerExecutorWithResolverAbstract implements HandlerExecutorInterface
     protected ResolverInterface $resolver;
     
     #[\Override]
-    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): void
+    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): mixed
     {
         $container                  = $this->container instanceof \WeakReference ? $this->container->get() : $this->container;
         
@@ -43,5 +43,7 @@ class HandlerExecutorWithResolverAbstract implements HandlerExecutorInterface
                 $handler->dispose();
             }
         }
+        
+        return null;
     }
 }

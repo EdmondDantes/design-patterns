@@ -5,14 +5,16 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 final class HandlerExecutorWithClass implements HandlerExecutorInterface
 {
-    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): void
+    public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): mixed
     {
         if(is_string($handler) && class_exists($handler)) {
             $handler = new $handler();
         }
         
         if(is_callable($handler)) {
-            $handler($stage, ...$parameters);
+            return $handler($stage, ...$parameters);
         }
+        
+        return null;
     }
 }

@@ -5,14 +5,7 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 use IfCastle\Exceptions\CompositeException;
 
-/**
- * Mimics the behavior of try-finally:
- *
- * Executes stages in order.
- * If an error occurs, execution stops.
- * However, handlers from the last STAGE will be executed regardless.
- */
-final class SequentialPlanExecutorWithFinal implements PlanExecutorInterface
+final class PlanExecutorWithFinalAndStageControl extends PlanExecutorWithStageControl
 {
     use FinalStageHandlersTrait;
     
@@ -25,30 +18,28 @@ final class SequentialPlanExecutorWithFinal implements PlanExecutorInterface
         array                    $stages,
         callable                 $stageSetter,
         HandlerExecutorInterface $handlerExecutor,
-        mixed                    ...$parameters
+                                 ...$parameters
     ): void
     {
+        if($stages === []) {
+            return;
+        }
+        
         $finalStage                 = array_key_last($stages);
         $finalHandlers              = array_pop($stages);
         $errors                     = [];
         
         try {
-            foreach ($stages as $stage => $handlers) {
-                
-                if($handlers === []) {
-                    continue;
-                }
-                
-                $stageSetter($stage);
-                
-                foreach ($handlers as $handler) {
-                    $handlerExecutor->executeHandler($handler, $stage, ...$parameters);
-                }
-            }
+            parent::executePlanStages(
+                $stages,
+                $stageSetter,
+                $handlerExecutor,
+                $parameters
+            );
         } catch (\Throwable $exception) {
             $errors[]               = $exception;
         }
-
+        
         $this->executeFinalStageHandler($finalStage, $finalHandlers, $errors, $stageSetter, $handlerExecutor, ...$parameters);
     }
 }
