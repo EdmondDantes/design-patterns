@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
 
-interface ExecutionPlanInterface
+use IfCastle\DesignPatterns\Immutable\ImmutableInterface;
+
+interface ExecutionPlanInterface extends ImmutableInterface
 {
     public function getCurrentStage(): string;
     

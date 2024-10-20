@@ -5,6 +5,7 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 use IfCastle\DesignPatterns\Handler\HandlerWithHashInterface;
 use IfCastle\Exceptions\BaseException;
+use IfCastle\Exceptions\LogicalException;
 use IfCastle\Exceptions\UnexpectedMethodMode;
 
 class ExecutionPlanWithMapping      extends ExecutionPlan
@@ -32,7 +33,7 @@ class ExecutionPlanWithMapping      extends ExecutionPlan
         InsertPositionEnum  $insertPosition = InsertPositionEnum::TO_END
     ): static
     {
-        $this->throwIfNotMutable();
+        $this->throwIfImmutable();
         
         // validate action before insert
         if(false === array_key_exists($stage, $this->stages)) {
@@ -109,10 +110,13 @@ class ExecutionPlanWithMapping      extends ExecutionPlan
         return $this;
     }
     
+    /**
+     * @throws LogicalException
+     */
     #[\Override]
     public function removeHandlerByHash(string|int|null $hash): void
     {
-        $this->throwIfNotMutable();
+        $this->throwIfImmutable();
         
         if($hash === null || false === array_key_exists($hash, $this->handlers)) {
             return;
