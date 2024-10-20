@@ -23,5 +23,15 @@ interface InterceptorPipelineInterface
     
     public function withArguments(array $arguments): static;
     
+    public function hasResult(): bool;
+    
+    public function getResult(): mixed;
+    
+    public function setResult(mixed $result): static;
+    
+    public function resetResult(): static;
+    
     public function stop(): void;
+    
+    public function isStopped(): bool;
 }

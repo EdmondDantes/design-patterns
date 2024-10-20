@@ -17,7 +17,12 @@ namespace IfCastle\DesignPatterns\Interceptor;
 class InterceptorPipeline           implements InterceptorPipelineInterface
 {
     protected bool $isStopped       = false;
-    protected \WeakReference|null $nextContext = null;
+    
+    protected \WeakReference|null $mainContext = null;
+    protected self|null $nextContext = null;
+    
+    protected mixed $result         = null;
+    protected bool $hasResult       = false;
     
     public function __construct(
         protected object $target,
@@ -36,7 +41,7 @@ class InterceptorPipeline           implements InterceptorPipelineInterface
             }
             
             if ($nextContext->nextContext !== null) {
-                $nextContext           = $nextContext->nextContext->get();
+                $nextContext           = $nextContext->nextContext;
             }
         }
     }
@@ -60,9 +65,59 @@ class InterceptorPipeline           implements InterceptorPipelineInterface
     public function withArguments(array $arguments): static
     {
         $clone                      = clone $this;
-        $this->nextContext          = \WeakReference::create($clone);
+        $clone->mainContext         = $this->mainContext ?? \WeakReference::create($this);
+        
+        $this->nextContext          = $clone;
         $clone->nextContext         = null;
         $clone->arguments           = $arguments;
+        $clone->result              = null;
+        
+        return $this;
+    }
+    
+    #[\Override]
+    public function hasResult(): bool
+    {
+        if($this->mainContext !== null) {
+            return $this->mainContext->get()->hasResult();
+        }
+        
+        return $this->hasResult;
+    }
+    
+    #[\Override]
+    public function getResult(): mixed
+    {
+        if($this->mainContext !== null) {
+            return $this->mainContext->get()->getResult();
+        }
+        
+        return $this->result;
+    }
+    
+    #[\Override]
+    public function setResult(mixed $result): static
+    {
+        if($this->mainContext !== null) {
+            $this->mainContext->get()->setResult($result);
+            return $this;
+        }
+        
+        $this->result               = $result;
+        $this->hasResult            = true;
+        return $this;
+    }
+    
+    #[\Override]
+    public function resetResult(): static
+    {
+        if($this->mainContext !== null) {
+            $this->mainContext->get()->resetResult();
+            return $this;
+        }
+        
+        $this->result               = null;
+        $this->hasResult            = false;
         return $this;
     }
     
@@ -70,5 +125,11 @@ class InterceptorPipeline           implements InterceptorPipelineInterface
     public function stop(): void
     {
         $this->isStopped            = true;
+    }
+    
+    #[\Override]
+    public function isStopped(): bool
+    {
+        return $this->isStopped;
     }
 }
