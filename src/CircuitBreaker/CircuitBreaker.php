@@ -52,8 +52,8 @@ class CircuitBreaker                implements CircuitBreakerInterface
         $this->lastCalledAt         = time();
         
         if ($this->failureCount >= $this->failureThreshold) {
-            $this->state            = CircuitBreakerStateEnum::OPEN;
             $this->currentDelay     = $this->backoffStrategy->calculateDelay($this);
+            $this->state            = $this->currentDelay > 0 ? CircuitBreakerStateEnum::OPEN : CircuitBreakerStateEnum::CLOSED;
         }
     }
     
@@ -85,7 +85,7 @@ class CircuitBreaker                implements CircuitBreakerInterface
             return true;
         }
         
-        return true;
+        return false;
     }
     
     /**
@@ -110,30 +110,6 @@ class CircuitBreaker                implements CircuitBreakerInterface
     public function getLastSuccessAt(): int
     {
         return $this->lastSuccessAt;
-    }
-    
-    /**
-     * Returns the current error delay.
-     */
-    public function getErrorDelay(): int
-    {
-        return $this->errorDelay;
-    }
-    
-    /**
-     * Returns the current number of errors.
-     */
-    public function getErrorCount(): int
-    {
-        return $this->errorCount;
-    }
-    
-    /**
-     * Returns the maximum delay value.
-     */
-    public function getMaxDelay(): int
-    {
-        return $this->maxDelay;
     }
     
     /**
@@ -183,7 +159,7 @@ class CircuitBreaker                implements CircuitBreakerInterface
     {
         $this->state                = CircuitBreakerStateEnum::CLOSED;
         $this->resetCounts();
-        $this->errorDelay           = 0;
+        $this->currentDelay         = 0;
     }
     
     /**
