@@ -7,20 +7,24 @@ use IfCastle\DesignPatterns\CircuitBreaker\BackoffStrategy\BackoffStrategyInterf
 class CircuitBreaker                implements CircuitBreakerInterface
 {
     protected CircuitBreakerStateEnum $state = CircuitBreakerStateEnum::CLOSED;
-    
-    protected int $lastCalledAt       = 0;
-    protected int $lastSuccessAt      = 0;
-    protected int $successCount       = 0;
-    protected int $failureCount       = 0;
-    protected int $totalFailureCount  = 0;
-    protected int $totalCount         = 0;
+    protected InvocationStatInterface $invocationStat;
     protected int $currentDelay       = 0;
+    protected mixed $setter;
     
     public function __construct(
         protected BackoffStrategyInterface $backoffStrategy,
         protected int $failureThreshold = 3,
         protected int $successThreshold = 2
-    ) {}
+    )
+    {
+        $this->invocationStat       = new InvocationStat(fn(callable $setter) => $this->setter = $setter);
+    }
+    
+    #[\Override]
+    public function getInvocationStat(): InvocationStatInterface
+    {
+        return $this->invocationStat;
+    }
     
     /**
      * Registers a successful call, resets failure counters,
@@ -28,15 +32,15 @@ class CircuitBreaker                implements CircuitBreakerInterface
      */
     public function registerSuccess(): void
     {
-        $this->lastSuccessAt        = time();
-        $this->lastCalledAt         = $this->lastSuccessAt;
-        $this->successCount++;
-        $this->totalCount++;
-        $this->failureCount         = 0;
+        ($this->setter)(true);
         
-        if ($this->state === CircuitBreakerStateEnum::HALF_OPEN && $this->successCount >= $this->successThreshold) {
+        if($this->backoffStrategy instanceof InvocationTrackingInterface) {
+            $this->backoffStrategy->registerSuccess();
+        }
+        
+        if ($this->state === CircuitBreakerStateEnum::HALF_OPEN && $this->invocationStat->getSuccessCount() >= $this->successThreshold) {
             $this->state            = CircuitBreakerStateEnum::CLOSED;
-            $this->resetCounts();
+            $this->invocationStat->resetCounters();
         }
     }
     
@@ -46,13 +50,14 @@ class CircuitBreaker                implements CircuitBreakerInterface
      */
     public function registerFailure(): void
     {
-        $this->totalCount++;
-        $this->totalFailureCount++;
-        $this->failureCount++;
-        $this->lastCalledAt         = time();
+        ($this->setter)(false);
         
-        if ($this->failureCount >= $this->failureThreshold) {
-            $this->currentDelay     = $this->backoffStrategy->calculateDelay($this);
+        if($this->backoffStrategy instanceof InvocationTrackingInterface) {
+            $this->backoffStrategy->registerFailure();
+        }
+        
+        if ($this->invocationStat->getFailureCount() >= $this->failureThreshold) {
+            $this->currentDelay     = $this->backoffStrategy->calculateDelay($this->invocationStat);
             $this->state            = $this->currentDelay > 0 ? CircuitBreakerStateEnum::OPEN : CircuitBreakerStateEnum::CLOSED;
         }
     }
@@ -79,45 +84,13 @@ class CircuitBreaker                implements CircuitBreakerInterface
         }
         
         if ($this->state === CircuitBreakerStateEnum::OPEN
-            && (time() - $this->lastCalledAt) >= $this->currentDelay) {
+            && (time() - $this->invocationStat->getLastCalledAt()) >= $this->currentDelay) {
             
             $this->state            = CircuitBreakerStateEnum::HALF_OPEN;
             return true;
         }
         
         return false;
-    }
-    
-    /**
-     * Returns the total number of calls.
-     */
-    public function getTotalCount(): int
-    {
-        return $this->totalCount;
-    }
-    
-    /**
-     * Returns the timestamp of the last call.
-     */
-    public function getLastCalledAt(): int
-    {
-        return $this->lastCalledAt;
-    }
-    
-    /**
-     * Returns the timestamp of the last successful call.
-     */
-    public function getLastSuccessAt(): int
-    {
-        return $this->lastSuccessAt;
-    }
-    
-    /**
-     * Returns the total number of errors.
-     */
-    public function getTotalFailureCount(): int
-    {
-        return $this->totalFailureCount;
     }
     
     /**
@@ -137,38 +110,12 @@ class CircuitBreaker                implements CircuitBreakerInterface
     }
     
     /**
-     * Returns the current number of consecutive failures.
-     */
-    public function getFailureCount(): int
-    {
-        return $this->failureCount;
-    }
-    
-    /**
-     * Returns the current number of consecutive successes.
-     */
-    public function getSuccessCount(): int
-    {
-        return $this->successCount;
-    }
-    
-    /**
      * Resets the Circuit Breaker to its initial state.
      */
-    public function reset(): void
+    public function resetState(): void
     {
         $this->state                = CircuitBreakerStateEnum::CLOSED;
-        $this->resetCounts();
+        $this->invocationStat->resetCounters();
         $this->currentDelay         = 0;
-    }
-    
-    /**
-     * Resets counters for failures, successes, and call count.
-     */
-    private function resetCounts(): void
-    {
-        $this->failureCount         = 0;
-        $this->successCount         = 0;
-        $this->totalCount            = 0;
     }
 }

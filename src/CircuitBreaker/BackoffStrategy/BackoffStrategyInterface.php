@@ -2,7 +2,7 @@
 
 namespace IfCastle\DesignPatterns\CircuitBreaker\BackoffStrategy;
 
-use IfCastle\DesignPatterns\CircuitBreaker\CircuitBreakerInterface;
+use IfCastle\DesignPatterns\CircuitBreaker\InvocationStatInterface;
 
 interface BackoffStrategyInterface
 {
@@ -11,5 +11,5 @@ interface BackoffStrategyInterface
      *
      * @return int The delay time in milliseconds before the next attempt.
      */
-    public function calculateDelay(CircuitBreakerInterface $circuitBreaker): int;
+    public function calculateDelay(InvocationStatInterface $invocationStat): int;
 }
