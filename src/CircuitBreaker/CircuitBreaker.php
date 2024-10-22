@@ -8,7 +8,7 @@ class CircuitBreaker                implements CircuitBreakerInterface
 {
     protected CircuitBreakerStateEnum $state = CircuitBreakerStateEnum::CLOSED;
     protected InvocationStatInterface $invocationStat;
-    protected int $currentDelay       = 0;
+    protected float $currentDelay   = 0.0;
     protected mixed $setter;
     
     public function __construct(
@@ -57,7 +57,7 @@ class CircuitBreaker                implements CircuitBreakerInterface
         }
         
         if ($this->invocationStat->getFailureCount() >= $this->failureThreshold) {
-            $this->currentDelay     = $this->backoffStrategy->calculateDelay($this->invocationStat);
+            $this->currentDelay     = $this->backoffStrategy->calculateDelay($this->invocationStat->getFailureCount());
             $this->state            = $this->currentDelay > 0 ? CircuitBreakerStateEnum::OPEN : CircuitBreakerStateEnum::CLOSED;
         }
     }
@@ -116,6 +116,6 @@ class CircuitBreaker                implements CircuitBreakerInterface
     {
         $this->state                = CircuitBreakerStateEnum::CLOSED;
         $this->invocationStat->resetCounters();
-        $this->currentDelay         = 0;
+        $this->currentDelay         = 0.0;
     }
 }
