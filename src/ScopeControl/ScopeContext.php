@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ScopeControl;
 
-readonly class ScopeContext         implements ScopeContextInterface
+readonly class ScopeContext implements ScopeContextInterface
 {
     public static function defaultScope(): ScopeContextInterface
     {
@@ -25,9 +26,7 @@ readonly class ScopeContext         implements ScopeContextInterface
         return new self(self::SCOPE_ROOT);
     }
 
-    public function __construct(private string $scopeName)
-    {
-    }
+    public function __construct(private string $scopeName) {}
 
     #[\Override]
     public function getScopeName(): string

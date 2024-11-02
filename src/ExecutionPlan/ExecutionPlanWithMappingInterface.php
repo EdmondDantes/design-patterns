@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
@@ -15,6 +16,6 @@ interface ExecutionPlanWithMappingInterface extends ExecutionPlanInterface, Hand
         mixed               $beforeHandler  = null,
         InsertPositionEnum $insertPosition  = InsertPositionEnum::TO_END
     ): static;
-    
+
     public function removeHandlerByHash(string|int|null $hash): void;
 }

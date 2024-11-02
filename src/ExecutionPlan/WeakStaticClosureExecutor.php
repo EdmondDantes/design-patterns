@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 /**
- * Class WeakStaticClosureExecutor
+ * Class WeakStaticClosureExecutor.
  *
  * Creates a handler through a static closure, with this object passed as the first argument.
  * This way, the class allows creating handlers that do not create additional
@@ -18,23 +19,23 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 final readonly class WeakStaticClosureExecutor implements HandlerExecutorInterface
 {
     private \WeakReference $self;
-    
+
     public function __construct(private \Closure $executor, object $self)
     {
         $this->self                 = \WeakReference::create($self);
     }
-    
-    
+
+
     #[\Override]
     public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): mixed
     {
         $self                       = $this->self->get();
         $executor                   = $this->executor;
-        
-        if(is_callable($executor)) {
+
+        if (\is_callable($executor)) {
             return $executor($self, $handler, $stage, ...$parameters);
         }
-        
+
         return null;
     }
 }

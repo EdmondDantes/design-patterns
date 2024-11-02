@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
@@ -15,7 +16,7 @@ use IfCastle\Exceptions\CompositeException;
 final class SequentialPlanExecutorWithFinal implements PlanExecutorInterface
 {
     use FinalStageHandlersTrait;
-    
+
     /**
      * @throws \Throwable
      * @throws CompositeException
@@ -26,21 +27,20 @@ final class SequentialPlanExecutorWithFinal implements PlanExecutorInterface
         callable                 $stageSetter,
         HandlerExecutorInterface $handlerExecutor,
         mixed                    ...$parameters
-    ): void
-    {
-        $finalStage                 = array_key_last($stages);
-        $finalHandlers              = array_pop($stages);
+    ): void {
+        $finalStage                 = \array_key_last($stages);
+        $finalHandlers              = \array_pop($stages);
         $errors                     = [];
-        
+
         try {
             foreach ($stages as $stage => $handlers) {
-                
-                if($handlers === []) {
+
+                if ($handlers === []) {
                     continue;
                 }
-                
+
                 $stageSetter($stage);
-                
+
                 foreach ($handlers as $handler) {
                     $handlerExecutor->executeHandler($handler, $stage, ...$parameters);
                 }

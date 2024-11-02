@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
@@ -17,11 +18,10 @@ trait FinalStageHandlersTrait
         array                    $errors,
         callable                 $stageSetter,
         HandlerExecutorInterface $handlerExecutor,
-                                 ...$parameters
-    ): void
-    {
+        ...$parameters
+    ): void {
         $stageSetter($finalStage);
-        
+
         foreach ($handlers as $handler) {
             try {
                 $handlerExecutor->executeHandler($handler, $finalStage, ...$parameters);
@@ -29,12 +29,12 @@ trait FinalStageHandlersTrait
                 $errors[]           = $exception;
             }
         }
-        
-        if(count($errors) === 1) {
+
+        if (\count($errors) === 1) {
             throw $errors[0];
         }
-        
-        if(count($errors) > 1) {
+
+        if (\count($errors) > 1) {
             throw new CompositeException('Error execution plan', ...$errors);
         }
     }

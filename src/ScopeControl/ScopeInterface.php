@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ScopeControl;
@@ -11,17 +12,17 @@ interface ScopeInterface
      * @var string
      */
     final public const string SCOPE_DEFAULT = '';
-    
+
     /**
      * @var string
      */
     final public const string SCOPE_PUBLIC = 'public';
-    
+
     /**
      * @var string
      */
     final public const string SCOPE_ADMIN = 'admin';
-    
+
     /**
      * @var string
      */

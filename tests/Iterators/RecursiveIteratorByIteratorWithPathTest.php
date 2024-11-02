@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\Iterators;
@@ -8,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class RecursiveIteratorByIteratorWithPathTest extends TestCase
 {
     private \RecursiveIterator $recursiveIterator;
-    
+
     private RecursiveIteratorByIteratorWithPath $recursiveIteratorWithPath;
 
     #[\Override]
@@ -42,7 +43,7 @@ class RecursiveIteratorByIteratorWithPathTest extends TestCase
             ->method('valid')
             ->willReturn(true);
 
-        $this->assertEquals(true, $this->recursiveIteratorWithPath->valid());
+        $this->assertTrue($this->recursiveIteratorWithPath->valid());
     }
 
     public function testRewind(): void
@@ -59,11 +60,11 @@ class RecursiveIteratorByIteratorWithPathTest extends TestCase
             new Node('root', [
                 new Node('child1', [
                     new Node('grandchild1'),
-                    new Node('grandchild2')
+                    new Node('grandchild2'),
                 ]),
                 new Node('child2', [
                     new Node('grandchild3'),
-                    new Node('grandchild4')
+                    new Node('grandchild4'),
                 ]),
             ])
         );
@@ -77,10 +78,10 @@ class RecursiveIteratorByIteratorWithPathTest extends TestCase
             }
 
             // Test the path functionality
-            if($node->name === 'grandchild2') {
-                $this->assertEquals(['root', 'child1'], array_map(static fn(Node $node) => $node->name, $recursiveIteratorWithPath->getPath()));
+            if ($node->name === 'grandchild2') {
+                $this->assertEquals(['root', 'child1'], \array_map(static fn(Node $node) => $node->name, $recursiveIteratorWithPath->getPath()));
             } elseif ($node->name === 'grandchild4') {
-                $this->assertEquals(['root', 'child2'], array_map(static fn(Node $node) => $node->name, $recursiveIteratorWithPath->getPath()));
+                $this->assertEquals(['root', 'child2'], \array_map(static fn(Node $node) => $node->name, $recursiveIteratorWithPath->getPath()));
             } elseif ($node->name === 'root') {
                 $this->assertEquals([], $recursiveIteratorWithPath->getPath());
             }
@@ -97,11 +98,11 @@ class RecursiveIteratorByIteratorWithPathTest extends TestCase
             new Node('root', [
                 new Node('child1', [
                     new Node('grandchild1'),
-                    new Node('grandchild2')
+                    new Node('grandchild2'),
                 ]),
                 new Node('child2', [
                     new Node('grandchild3'),
-                    new Node('grandchild4')
+                    new Node('grandchild4'),
                 ]),
             ])
         );
@@ -126,11 +127,11 @@ class RecursiveIteratorByIteratorWithPathTest extends TestCase
             new Node('root', [
                 new Node('child1', [
                     new Node('grandchild1'),
-                    new Node('grandchild2')
+                    new Node('grandchild2'),
                 ]),
                 new Node('child2', [
                     new Node('grandchild3'),
-                    new Node('grandchild4')
+                    new Node('grandchild4'),
                 ]),
             ])
         );
@@ -144,12 +145,12 @@ class RecursiveIteratorByIteratorWithPathTest extends TestCase
             }
 
             // Test the path functionality
-            if($node->name === 'grandchild2') {
+            if ($node->name === 'grandchild2') {
                 $this->assertEquals('child1', $recursiveIteratorWithPath->getParent()?->name);
             } elseif ($node->name === 'grandchild4') {
                 $this->assertEquals('child2', $recursiveIteratorWithPath->getParent()?->name);
             } elseif ($node->name === 'root') {
-                $this->assertEquals(null, $recursiveIteratorWithPath->getParent());
+                $this->assertNull($recursiveIteratorWithPath->getParent());
             }
         }
 
@@ -157,5 +158,5 @@ class RecursiveIteratorByIteratorWithPathTest extends TestCase
 
         $this->assertEquals($expectedVisitedNodes, $visitedNodes);
     }
-    
+
 }

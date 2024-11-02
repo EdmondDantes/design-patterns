@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\Handler;
@@ -11,21 +12,21 @@ namespace IfCastle\DesignPatterns\Handler;
 final readonly class WeakHandler implements InvokableInterface
 {
     private \WeakReference $handler;
-    
+
     public function __construct(callable $handler)
     {
         $this->handler              = \WeakReference::create($handler);
     }
-    
+
     #[\Override]
     public function __invoke(mixed ...$args): mixed
     {
         $handler                    = $this->handler->get();
-        
+
         if ($handler === null) {
             return null;
         }
-        
+
         return $handler(...$args);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\Iterators;
@@ -15,19 +16,19 @@ class NodeRecursiveIterator implements \RecursiveIterator
     #[\Override]
     public function current(): mixed
     {
-        return current($this->nodes);
+        return \current($this->nodes);
     }
 
     #[\Override]
     public function next(): void
     {
-        next($this->nodes);
+        \next($this->nodes);
     }
 
     #[\Override]
     public function key(): mixed
     {
-        return key($this->nodes);
+        return \key($this->nodes);
     }
 
     #[\Override]
@@ -39,13 +40,13 @@ class NodeRecursiveIterator implements \RecursiveIterator
     #[\Override]
     public function rewind(): void
     {
-        reset($this->nodes);
+        \reset($this->nodes);
     }
 
     #[\Override]
     public function hasChildren(): bool
     {
-        return count($this->current()->children) > 0;
+        return \count($this->current()->children) > 0;
     }
 
     #[\Override]

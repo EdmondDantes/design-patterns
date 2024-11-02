@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ScopeControl;
@@ -6,10 +7,10 @@ namespace IfCastle\DesignPatterns\ScopeControl;
 trait ScopeTrait
 {
     /**
-     * Current scope
+     * Current scope.
      */
     protected string $scope         = ScopeInterface::SCOPE_DEFAULT;
-    
+
     public function getScopeName(): string
     {
         return $this->scope;
@@ -29,7 +30,7 @@ trait ScopeTrait
     {
         return $this->scope === ScopeInterface::SCOPE_ADMIN;
     }
-    
+
     public function isScopeRoot(): bool
     {
         return $this->scope === ScopeInterface::SCOPE_ROOT;

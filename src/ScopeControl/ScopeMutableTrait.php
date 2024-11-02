@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ScopeControl;
@@ -12,7 +13,7 @@ trait ScopeMutableTrait
         $this->scope                = $scope;
         return $this;
     }
-    
+
     public function withDefaultScope(): static
     {
         $this->scope                = ScopeInterface::SCOPE_DEFAULT;

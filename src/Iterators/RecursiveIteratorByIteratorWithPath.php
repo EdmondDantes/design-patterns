@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\Iterators;
@@ -9,16 +10,17 @@ namespace IfCastle\DesignPatterns\Iterators;
  * to iterate objects recursively through a recursive iterator with the ability to get the current path from the nodes.
  * The $isSelfFirst parameter specifies that parent nodes should be used first.
  */
-class RecursiveIteratorByIteratorWithPath   implements \Iterator,
-                                                       IteratorWithPathInterface,
-                                                       IteratorParentAwareInterface,
-                                                       IteratorCloneInterface
+class RecursiveIteratorByIteratorWithPath implements
+    \Iterator,
+    IteratorWithPathInterface,
+    IteratorParentAwareInterface,
+    IteratorCloneInterface
 {
     /**
      * @var array<\RecursiveIterator>
      */
     protected array $path           = [];
-    
+
     protected bool $isSelfPassed    = false;
 
     public function __construct(protected \RecursiveIterator $currentIterator, protected bool $isSelfFirst = true) {}
@@ -30,8 +32,8 @@ class RecursiveIteratorByIteratorWithPath   implements \Iterator,
 
         foreach ($this->path as $iterator) {
 
-            if($iterator instanceof IteratorWithPathInterface) {
-                $path               = array_merge($path, $iterator->getPath());
+            if ($iterator instanceof IteratorWithPathInterface) {
+                $path               = \array_merge($path, $iterator->getPath());
             }
 
             $path[]                 = $iterator->current();
@@ -39,33 +41,33 @@ class RecursiveIteratorByIteratorWithPath   implements \Iterator,
 
         return $path;
     }
-    
+
     #[\Override]
     public function getParentIterator(): \Iterator|null
     {
-        if($this->path === []) {
+        if ($this->path === []) {
             return null;
         }
-        
-        return $this->path[array_key_last($this->path)] ?? null;
+
+        return $this->path[\array_key_last($this->path)] ?? null;
     }
-    
+
     #[\Override]
     public function getParent(): object|null
     {
-        if($this->path === []) {
+        if ($this->path === []) {
             return null;
         }
-        
-        $iterator                   = $this->path[array_key_last($this->path)] ?? null;
-        
-        if($iterator instanceof \Iterator) {
+
+        $iterator                   = $this->path[\array_key_last($this->path)] ?? null;
+
+        if ($iterator instanceof \Iterator) {
             return $iterator->current();
         }
-        
+
         return null;
     }
-    
+
     #[\Override]
     public function current(): mixed
     {
@@ -75,10 +77,10 @@ class RecursiveIteratorByIteratorWithPath   implements \Iterator,
     #[\Override]
     public function next(): void
     {
-        if($this->isSelfFirst) {
+        if ($this->isSelfFirst) {
 
             // Try to go deeper if possible to the first leaf
-            if($this->isSelfPassed && $this->currentIterator->hasChildren()) {
+            if ($this->isSelfPassed && $this->currentIterator->hasChildren()) {
                 $this->path[]           = $this->currentIterator;
                 $this->currentIterator  = $this->currentIterator->getChildren();
                 $this->currentIterator->rewind();
@@ -89,16 +91,16 @@ class RecursiveIteratorByIteratorWithPath   implements \Iterator,
             $this->currentIterator->next();
             $this->isSelfPassed     = true;
 
-            if($this->currentIterator->valid()) {
+            if ($this->currentIterator->valid()) {
                 return;
             }
 
             // Try to go up if possible
             while ($this->path !== []) {
-                $this->currentIterator  = array_pop($this->path);
+                $this->currentIterator  = \array_pop($this->path);
                 $this->currentIterator->next();
 
-                if($this->currentIterator->valid()) {
+                if ($this->currentIterator->valid()) {
                     return;
                 }
             }
@@ -106,7 +108,7 @@ class RecursiveIteratorByIteratorWithPath   implements \Iterator,
             return;
         }
 
-        if(false === $this->isSelfPassed) {
+        if (false === $this->isSelfPassed) {
             $this->isSelfPassed     = true;
             return;
         }
@@ -114,11 +116,11 @@ class RecursiveIteratorByIteratorWithPath   implements \Iterator,
         $this->isSelfPassed         = false;
         $this->currentIterator->next();
 
-        if(false === $this->currentIterator->valid()) {
+        if (false === $this->currentIterator->valid()) {
             // Try to go up if possible
             while ($this->path !== []) {
-                $this->currentIterator  = array_pop($this->path);
-                if($this->currentIterator->valid()) {
+                $this->currentIterator  = \array_pop($this->path);
+                if ($this->currentIterator->valid()) {
                     $this->isSelfPassed = true;
                     return;
                 }
@@ -162,36 +164,36 @@ class RecursiveIteratorByIteratorWithPath   implements \Iterator,
     {
         $this->isSelfPassed         = true;
 
-        if($this->path !== []) {
-            $this->currentIterator  = array_shift($this->path);
+        if ($this->path !== []) {
+            $this->currentIterator  = \array_shift($this->path);
         }
 
         $this->path                 = [];
         $this->currentIterator->rewind();
 
-        if(false === $this->isSelfFirst && $this->currentIterator->hasChildren()) {
+        if (false === $this->isSelfFirst && $this->currentIterator->hasChildren()) {
             while (true) {
                 $this->path[]           = $this->currentIterator;
                 $this->currentIterator  = $this->currentIterator->getChildren();
                 $this->currentIterator->rewind();
 
-                if($this->currentIterator->hasChildren() === false) {
+                if ($this->currentIterator->hasChildren() === false) {
                     $this->isSelfPassed = true;
                     return;
                 }
             }
         }
     }
-    
+
     public function __clone(): void
     {
         $this->currentIterator      = clone $this->currentIterator;
-        
+
         foreach ($this->path as $key => $iterator) {
             $this->path[$key]       = clone $iterator;
         }
     }
-    
+
     #[\Override]
     public function cloneAndRewind(): static
     {

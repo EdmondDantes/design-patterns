@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 /**
- * ## Plan Executor with Stage Control
+ * ## Plan Executor with Stage Control.
  *
  * The class allows Stage handlers to modify the execution
  * order of the plan by either terminating the current stage processing or directly moving to the next one.
@@ -26,34 +27,34 @@ class PlanExecutorWithStageControl implements PlanExecutorInterface
     public function executePlanStages(array $stages, callable $stageSetter, HandlerExecutorInterface $handlerExecutor, mixed ...$parameters): void
     {
         $nextStage                  = null;
-        
+
         foreach ($stages as $stage => $handlers) {
-            
-            if($nextStage !== null && $stage !== $nextStage) {
+
+            if ($nextStage !== null && $stage !== $nextStage) {
                 continue;
             }
-            
-            if($handlers === []) {
+
+            if ($handlers === []) {
                 continue;
             }
-            
+
             $stageSetter($stage);
-            
+
             foreach ($handlers as $handler) {
                 $stagePointer       = $handlerExecutor->executeHandler($handler, $stage, ...$parameters);
-                
-                if($stagePointer instanceof StagePointer) {
-                    
-                    if($stagePointer->finishPlan) {
+
+                if ($stagePointer instanceof StagePointer) {
+
+                    if ($stagePointer->finishPlan) {
                         return;
                     }
-                    
-                    if($stagePointer->goToStage !== null) {
+
+                    if ($stagePointer->goToStage !== null) {
                         $nextStage  = $stagePointer->goToStage;
                         break;
                     }
-                    
-                    if($stagePointer->breakCurrent) {
+
+                    if ($stagePointer->breakCurrent) {
                         break;
                     }
                 }

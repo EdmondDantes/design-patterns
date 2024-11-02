@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d405240d3b4b0c0e3cf612950e55e762",
+    "content-hash": "a93e3fb2f5c9806a466a6fd3e9ffdf2f",
     "packages": [
         {
             "name": "ifcastle/di",
-            "version": "v0.7.0",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EdmondDantes/di.git",
-                "reference": "07b73bee9e15824156cdef254dcd8dd9fd815b87"
+                "reference": "8d5e3c36f2d51641d3071a0479d0ed794697c89e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EdmondDantes/di/zipball/07b73bee9e15824156cdef254dcd8dd9fd815b87",
-                "reference": "07b73bee9e15824156cdef254dcd8dd9fd815b87",
+                "url": "https://api.github.com/repos/EdmondDantes/di/zipball/8d5e3c36f2d51641d3071a0479d0ed794697c89e",
+                "reference": "8d5e3c36f2d51641d3071a0479d0ed794697c89e",
                 "shasum": ""
             },
             "require": {
@@ -56,9 +56,9 @@
             ],
             "support": {
                 "issues": "https://github.com/EdmondDantes/di/issues",
-                "source": "https://github.com/EdmondDantes/di/tree/v0.7.0"
+                "source": "https://github.com/EdmondDantes/di/tree/v0.7.1"
             },
-            "time": "2024-11-01T13:53:10+00:00"
+            "time": "2024-11-01T17:03:46+00:00"
         },
         {
             "name": "ifcastle/exceptions",
@@ -665,6 +665,47 @@
             "time": "2024-08-30T23:09:38+00:00"
         },
         {
+            "name": "ifcastle/codestyle",
+            "version": "v0.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EdmondDantes/ifcastle-codestyle.git",
+                "reference": "b009a6a00a548ed5906094ca12e7068461451dec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EdmondDantes/ifcastle-codestyle/zipball/b009a6a00a548ed5906094ca12e7068461451dec",
+                "reference": "b009a6a00a548ed5906094ca12e7068461451dec",
+                "shasum": ""
+            },
+            "require": {
+                "friendsofphp/php-cs-fixer": "^3.64",
+                "php": ">=8.3",
+                "phpstan/phpstan": "^1.12",
+                "rector/rector": "^1.2"
+            },
+            "type": "codestyle",
+            "autoload": {
+                "psr-4": {
+                    "IfCastle\\CodeStyle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "CodeStyle",
+            "keywords": [
+                "Codestyle",
+                "ifcastle"
+            ],
+            "support": {
+                "issues": "https://github.com/EdmondDantes/ifcastle-codestyle/issues",
+                "source": "https://github.com/EdmondDantes/ifcastle-codestyle/tree/v0.1.7"
+            },
+            "time": "2024-10-26T13:56:03+00:00"
+        },
+        {
             "name": "myclabs/deep-copy",
             "version": "1.12.0",
             "source": {
@@ -899,6 +940,64 @@
                 "source": "https://github.com/phar-io/version/tree/3.2.1"
             },
             "time": "2022-02-21T01:04:05+00:00"
+        },
+        {
+            "name": "phpstan/phpstan",
+            "version": "1.12.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "dc2b9976bd8b0f84ec9b0e50cc35378551de7af0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dc2b9976bd8b0f84ec9b0e50cc35378551de7af0",
+                "reference": "dc2b9976bd8b0f84ec9b0e50cc35378551de7af0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "keywords": [
+                "dev",
+                "static analysis"
+            ],
+            "support": {
+                "docs": "https://phpstan.org/user-guide/getting-started",
+                "forum": "https://github.com/phpstan/phpstan/discussions",
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "security": "https://github.com/phpstan/phpstan/security/policy",
+                "source": "https://github.com/phpstan/phpstan-src"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-10-18T11:12:07+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2005,6 +2104,65 @@
                 }
             ],
             "time": "2024-06-11T12:45:25+00:00"
+        },
+        {
+            "name": "rector/rector",
+            "version": "1.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rectorphp/rector.git",
+                "reference": "05755bf43617449c08ee8e50fb840c85ad3b1240"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/05755bf43617449c08ee8e50fb840c85ad3b1240",
+                "reference": "05755bf43617449c08ee8e50fb840c85ad3b1240",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0",
+                "phpstan/phpstan": "^1.12.5"
+            },
+            "conflict": {
+                "rector/rector-doctrine": "*",
+                "rector/rector-downgrade-php": "*",
+                "rector/rector-phpunit": "*",
+                "rector/rector-symfony": "*"
+            },
+            "suggest": {
+                "ext-dom": "To manipulate phpunit.xml via the custom-rule command"
+            },
+            "bin": [
+                "bin/rector"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Instant Upgrade and Automated Refactoring of any PHP code",
+            "keywords": [
+                "automation",
+                "dev",
+                "migration",
+                "refactoring"
+            ],
+            "support": {
+                "issues": "https://github.com/rectorphp/rector/issues",
+                "source": "https://github.com/rectorphp/rector/tree/1.2.8"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-10-18T11:54:27+00:00"
         },
         {
             "name": "sebastian/cli-parser",

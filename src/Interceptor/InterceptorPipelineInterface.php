@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\Interceptor;
@@ -18,20 +19,20 @@ interface InterceptorPipelineInterface
      * @return T
      */
     public function getTarget(): object;
-    
+
     public function getArguments(): array;
-    
+
     public function withArguments(array $arguments): static;
-    
+
     public function hasResult(): bool;
-    
+
     public function getResult(): mixed;
-    
+
     public function setResult(mixed $result): static;
-    
+
     public function resetResult(): static;
-    
+
     public function stop(): void;
-    
+
     public function isStopped(): bool;
 }

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace IfCastle\DesignPatterns\Pool;
 
 /**
- * # Return Factory Interface
+ * # Return Factory Interface.
  *
  * A return factory is responsible for creating decorators for objects in the pool.
  *

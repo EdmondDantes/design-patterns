@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\ExecutionPlan;
@@ -12,7 +13,7 @@ class HandlerExecutorWithResolverSetter extends HandlerExecutorWithResolverAbstr
     {
         $this->resolver = $resolver;
     }
-    
+
     public function setContainer(ContainerInterface $container): void
     {
         $this->container = \WeakReference::create($container);

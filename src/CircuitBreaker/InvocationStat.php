@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\CircuitBreaker;
 
-class InvocationStat                implements InvocationStatInterface
+class InvocationStat implements InvocationStatInterface
 {
     protected int $lastCalledAt     = 0;
     protected int $lastSuccessAt    = 0;
@@ -11,15 +12,15 @@ class InvocationStat                implements InvocationStatInterface
     protected int $successCount     = 0;
     protected int $totalCount       = 0;
     protected int $totalFailureCount = 0;
-    
-    public function __construct(callable $tracingSetter = null)
+
+    public function __construct(?callable $tracingSetter = null)
     {
         if ($tracingSetter) {
             $tracingSetter(fn(bool $isSuccess) => $this->registerEvent($isSuccess));
         }
     }
-    
-    
+
+
     public function getLastCalledAt(): int
     {
         return $this->lastCalledAt;
@@ -58,8 +59,8 @@ class InvocationStat                implements InvocationStatInterface
 
     protected function registerEvent(bool $isSuccess): void
     {
-        if($isSuccess) {
-            $this->lastSuccessAt        = time();
+        if ($isSuccess) {
+            $this->lastSuccessAt        = \time();
             $this->successCount++;
             $this->totalCount++;
         } else {

@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\CircuitBreaker\BackoffStrategy;
 
-readonly final class LinearBackoff implements BackoffStrategyInterface
+final readonly class LinearBackoff implements BackoffStrategyInterface
 {
     /**
      * @param float $initialDelay     The initial delay in seconds.
@@ -11,12 +12,12 @@ readonly final class LinearBackoff implements BackoffStrategyInterface
      * @param float $maxDelay         The maximum allowable delay in seconds.
      */
     public function __construct(private float $initialDelay = 1.0, private float $increment = 1.0, private float $maxDelay = 30.0) {}
-    
+
     public function calculateDelay(int $failureAttempts): float
     {
-        return min($this->initialDelay + ($failureAttempts * $this->increment), $this->maxDelay);
+        return \min($this->initialDelay + ($failureAttempts * $this->increment), $this->maxDelay);
     }
-    
+
     /**
      * Returns the maximum delay that can be used.
      *
