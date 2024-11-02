@@ -15,11 +15,21 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
  * ```php
  * new WeakStaticClosureExecutor(static fn($self, $handler, $stage, mixed ...$parameters) => $self->handlerExecutor($handler, $stage, ...$parameters), $this)
  * ```
+ *
+ * @template T of object
+ *
  */
 final readonly class WeakStaticClosureExecutor implements HandlerExecutorInterface
 {
+    /**
+     * @var \WeakReference<T>
+     */
     private \WeakReference $self;
 
+    /**
+     * @param \Closure(object $self, mixed $handler, string $stage, mixed ...$parameters): mixed $executor
+     * @param T        $self
+     */
     public function __construct(private \Closure $executor, object $self)
     {
         $this->self                 = \WeakReference::create($self);
@@ -36,6 +46,7 @@ final readonly class WeakStaticClosureExecutor implements HandlerExecutorInterfa
             return $executor($self, $handler, $stage, ...$parameters);
         }
 
+        /* @phpstan-ignore-next-line */
         return null;
     }
 }

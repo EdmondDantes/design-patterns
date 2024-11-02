@@ -19,7 +19,7 @@ interface ReturnFactoryInterface
     /**
      * Creates a decorator for the original object.
      * @param T $originalObject
-     * @param PoolInterface $pool
+     * @param PoolInterface<T> $pool
      * @return T
      */
     public function createDecorator(object $originalObject, PoolInterface $pool): object;

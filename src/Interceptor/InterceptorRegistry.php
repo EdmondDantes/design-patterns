@@ -15,7 +15,7 @@ use IfCastle\Exceptions\UnexpectedValueType;
 class InterceptorRegistry extends Container implements InterceptorRegistryInterface
 {
     /**
-     * @var array<string, int[]>
+     * @var array<string, string[]>
      */
     protected array $referenceByInterface   = [];
 

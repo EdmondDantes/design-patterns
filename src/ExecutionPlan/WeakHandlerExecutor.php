@@ -29,6 +29,7 @@ final readonly class WeakHandlerExecutor implements HandlerExecutorInterface
             return null;
         }
 
+        /* @phpstan-ignore-next-line */
         if (\is_callable($executor)) {
             return $executor($handler, $stage, ...$parameters);
         }

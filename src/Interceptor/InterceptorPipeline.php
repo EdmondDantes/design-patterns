@@ -37,7 +37,7 @@ class InterceptorPipeline implements InterceptorPipelineInterface
     /**
      * @param object $target
      * @param array<mixed> $arguments
-     * @param InterceptorInterface ...$interceptors
+     * @param InterceptorInterface<T> ...$interceptors
      */
     public function __construct(
         protected object $target,

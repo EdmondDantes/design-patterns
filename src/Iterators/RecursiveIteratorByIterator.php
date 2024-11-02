@@ -9,12 +9,20 @@ use IfCastle\Exceptions\UnexpectedValueType;
 /**
  * ## RecursiveIteratorByIterator
  * Recursive iterator over objects with implemented interface IteratorAggregate.
+ *
+ * @template TKey
+ * @template TValue
+ * @implements \RecursiveIterator<TKey, TValue>
  */
 class RecursiveIteratorByIterator implements \RecursiveIterator, IteratorCloneInterface
 {
+    /**
+     * @var \Iterator<TKey, TValue>
+     */
     protected \Iterator $iterator;
 
     /**
+     * @param \Traversable<TKey, TValue> $iterator
      * @throws UnexpectedValueType
      */
     public function __construct(\Traversable $iterator)
@@ -35,6 +43,8 @@ class RecursiveIteratorByIterator implements \RecursiveIterator, IteratorCloneIn
     /**
      * @throws UnexpectedValueType
      * @throws \Exception
+     *
+     * @return \RecursiveIterator<TKey, TValue>|null
      */
     #[\Override]
     public function getChildren(): ?\RecursiveIterator
@@ -46,6 +56,7 @@ class RecursiveIteratorByIterator implements \RecursiveIterator, IteratorCloneIn
         $current                    = $this->iterator->current();
 
         if ($current instanceof \IteratorAggregate) {
+            /* @phpstan-ignore-next-line */
             return new static($current->getIterator());
         }
 

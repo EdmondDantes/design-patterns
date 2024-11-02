@@ -10,6 +10,7 @@ trait FinalStageHandlersTrait
 {
     /**
      * @param array<mixed> $handlers
+     * @param \Throwable[] $errors
      *
      * @throws \Throwable
      * @throws CompositeException

@@ -13,6 +13,7 @@ final class HandlerExecutorCallable implements HandlerExecutorInterface
             return $handler($stage, ...$parameters);
         }
 
+        /* @phpstan-ignore-next-line */
         return null;
     }
 }

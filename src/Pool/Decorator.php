@@ -13,13 +13,13 @@ use IfCastle\DI\DisposableInterface;
 final class Decorator implements DecoratorInterface, DisposableInterface
 {
     /**
-     * @var \WeakReference<PoolInterface>|null
+     * @var \WeakReference<object>|null
      */
     private \WeakReference|null $pool;
     
     /**
      * @param T|null   $originalObject
-     * @param PoolInterface $pool
+     * @param PoolInterface<T> $pool
      */
     public function __construct(private object|null $originalObject, PoolInterface $pool)
     {

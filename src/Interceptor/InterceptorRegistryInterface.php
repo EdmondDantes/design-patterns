@@ -36,5 +36,12 @@ interface InterceptorRegistryInterface
      */
     public function registerInterceptorInjectable(string|array $interface, string $class): static;
 
+    /**
+     * Resolve interceptors for a given interface.
+     *
+     * @param string $interface
+     *
+     * @return InterceptorInterface<object>[]
+     */
     public function resolveInterceptors(string $interface): array;
 }
