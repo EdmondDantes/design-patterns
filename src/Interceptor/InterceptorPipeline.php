@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace IfCastle\DesignPatterns\Interceptor;
 
 /**
- * @template T
+ * @template T of object
+ * @implements InterceptorPipelineInterface<T>
  *
  * This type of Pipeline implementation works in such a way that it allows only the substitution of arguments,
  * but not the Target or the list of interceptors.
@@ -19,14 +20,25 @@ class InterceptorPipeline implements InterceptorPipelineInterface
 {
     protected bool $isStopped       = false;
 
+    /**
+     * @var \WeakReference<InterceptorPipelineInterface<T>>|null $mainContext
+     */
     protected \WeakReference|null $mainContext = null;
     
-    protected self|null $nextContext = null;
+    /**
+     * @var InterceptorPipelineInterface<T>|null $nextContext
+     */
+    protected InterceptorPipelineInterface|null $nextContext = null;
 
     protected mixed $result         = null;
     
     protected bool $hasResult       = false;
 
+    /**
+     * @param object $target
+     * @param array<mixed> $arguments
+     * @param InterceptorInterface ...$interceptors
+     */
     public function __construct(
         protected object $target,
         protected array $arguments,

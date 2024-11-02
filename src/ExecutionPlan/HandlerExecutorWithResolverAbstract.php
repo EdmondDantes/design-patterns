@@ -13,6 +13,9 @@ use IfCastle\DI\ResolverInterface;
 
 class HandlerExecutorWithResolverAbstract implements HandlerExecutorInterface
 {
+    /**
+     * @var ContainerInterface|\WeakReference<ContainerInterface>|null
+     */
     protected ContainerInterface|\WeakReference|null $container = null;
     
     protected ResolverInterface $resolver;

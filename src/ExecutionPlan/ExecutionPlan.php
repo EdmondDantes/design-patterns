@@ -19,6 +19,9 @@ class ExecutionPlan implements ExecutionPlanInterface
 
     protected string $currentStage  = '';
 
+    /**
+     * @param array<string> $stages
+     */
     public function __construct(
         protected readonly HandlerExecutorInterface $handlerExecutor,
         array $stages,

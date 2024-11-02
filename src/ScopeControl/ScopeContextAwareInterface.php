@@ -6,5 +6,5 @@ namespace IfCastle\DesignPatterns\ScopeControl;
 
 interface ScopeContextAwareInterface
 {
-    public function getScopeContext(): ScopeContextInterface;
+    public function obtainScopeContext(): ScopeContextInterface;
 }

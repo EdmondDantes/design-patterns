@@ -11,6 +11,9 @@ namespace IfCastle\DesignPatterns\Handler;
  */
 final readonly class WeakHandler implements InvokableInterface
 {
+    /**
+     * @var \WeakReference<object> $handler
+     */
     private \WeakReference $handler;
 
     public function __construct(callable $handler)

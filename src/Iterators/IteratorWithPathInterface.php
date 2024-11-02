@@ -8,6 +8,7 @@ interface IteratorWithPathInterface
 {
     /**
      * Returns a current path from root node to current node.
+     * @return mixed[]
      */
     public function getPath(): array;
 }

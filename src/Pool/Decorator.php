@@ -6,10 +6,21 @@ namespace IfCastle\DesignPatterns\Pool;
 
 use IfCastle\DI\DisposableInterface;
 
+/**
+ * @template T of object
+ * @implements DecoratorInterface<T>
+ */
 final class Decorator implements DecoratorInterface, DisposableInterface
 {
+    /**
+     * @var \WeakReference<PoolInterface>|null
+     */
     private \WeakReference|null $pool;
-
+    
+    /**
+     * @param T|null   $originalObject
+     * @param PoolInterface $pool
+     */
     public function __construct(private object|null $originalObject, PoolInterface $pool)
     {
         $this->pool                 = \WeakReference::create($pool);
@@ -20,7 +31,13 @@ final class Decorator implements DecoratorInterface, DisposableInterface
         $this->dispose();
     }
 
-    public function __call(string $name, array $arguments)
+    /**
+     * @param string $name
+     * @param array<mixed> $arguments
+     *
+     * @return mixed
+     */
+    public function __call(string $name, array $arguments): mixed
     {
         return $this->originalObject->{$name}(...$arguments);
     }

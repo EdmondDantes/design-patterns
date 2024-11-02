@@ -13,8 +13,14 @@ namespace IfCastle\DesignPatterns\Handler;
  */
 final readonly class WeakStaticHandler implements InvokableInterface
 {
+    /**
+     * @var callable(object $self, mixed ...$args): mixed $handler
+     */
     private mixed $handler;
     
+    /**
+     * @var \WeakReference<object> $object
+     */
     private \WeakReference $object;
 
     public function __construct(callable $handler, object $object)

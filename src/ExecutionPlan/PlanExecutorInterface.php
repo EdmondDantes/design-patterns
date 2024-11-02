@@ -6,5 +6,15 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 interface PlanExecutorInterface
 {
-    public function executePlanStages(array $stages, callable $stageSetter, HandlerExecutorInterface $handlerExecutor, mixed ...$parameters): void;
+    /**
+     * @param array<string, array<mixed>>   $stages
+     * @param callable(string $stage): void $stageSetter
+     * @param mixed                         ...$parameters
+     */
+    public function executePlanStages(
+        array                    $stages,
+        callable                 $stageSetter,
+        HandlerExecutorInterface $handlerExecutor,
+        mixed                    ...$parameters
+    ): void;
 }

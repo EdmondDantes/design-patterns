@@ -6,8 +6,14 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 final readonly class WeakHandlerExecutor implements HandlerExecutorInterface
 {
+    /**
+     * @var \WeakReference<HandlerExecutorInterface>|\WeakReference<mixed> $executor
+     */
     private \WeakReference $executor;
 
+    /**
+     * @param callable(mixed $handler, string $stage, mixed ...$parameters): mixed|HandlerExecutorInterface $handler
+     */
     public function __construct(callable|HandlerExecutorInterface $handler)
     {
         $this->executor             = \WeakReference::create($handler);

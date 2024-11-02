@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace IfCastle\DesignPatterns\Pool;
 
+/**
+ * @template T of object
+ * @implements StackInterface<T>
+ */
 final class Stack implements StackInterface
 {
+    /**
+     * @var T[]
+     */
     private array $stack             = [];
 
     #[\Override]

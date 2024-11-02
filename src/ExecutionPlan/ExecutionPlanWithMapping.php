@@ -13,6 +13,9 @@ class ExecutionPlanWithMapping extends ExecutionPlan implements ExecutionPlanWit
 {
     protected bool $forbidDuplicateHandlers = true;
     
+    /**
+     * @var array<string, callable[]>
+     */
     protected array $handlers = [];
 
     #[\Override]

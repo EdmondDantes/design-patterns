@@ -7,7 +7,12 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 final class SequentialPlanExecutor implements PlanExecutorInterface
 {
     #[\Override]
-    public function executePlanStages(array $stages, callable $stageSetter, HandlerExecutorInterface $handlerExecutor, mixed ...$parameters): void
+    public function executePlanStages(
+        array                    $stages,
+        callable                 $stageSetter,
+        HandlerExecutorInterface $handlerExecutor,
+        mixed                    ...$parameters
+    ): void
     {
         foreach ($stages as $stage => $handlers) {
 

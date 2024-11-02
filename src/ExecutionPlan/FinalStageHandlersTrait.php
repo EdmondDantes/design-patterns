@@ -9,6 +9,8 @@ use IfCastle\Exceptions\CompositeException;
 trait FinalStageHandlersTrait
 {
     /**
+     * @param array<mixed> $handlers
+     *
      * @throws \Throwable
      * @throws CompositeException
      */
@@ -18,7 +20,7 @@ trait FinalStageHandlersTrait
         array                    $errors,
         callable                 $stageSetter,
         HandlerExecutorInterface $handlerExecutor,
-        ...$parameters
+        mixed ...$parameters
     ): void {
         $stageSetter($finalStage);
 

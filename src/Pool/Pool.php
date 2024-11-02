@@ -7,12 +7,29 @@ namespace IfCastle\DesignPatterns\Pool;
 use IfCastle\DesignPatterns\Factory\FactoryInterface;
 use IfCastle\DI\DisposableInterface;
 
+/**
+ * @template T of object
+ * @implements PoolInterface<T>
+ */
 class Pool implements PoolInterface
 {
+    /**
+     * List of decorated objects<T>
+     * @var T[]
+     */
     private array $borrowed         = [];
     
     private int   $lastBorrowAt     = 0;
 
+    /**
+     * @param FactoryInterface<T>       $factory
+     * @param int                       $maxPoolSize
+     * @param int                       $minPoolSize
+     * @param int                       $timeout
+     * @param int                       $delayPoolReduction
+     * @param StackInterface<T>         $stack
+     * @param ReturnFactoryInterface<T> $returnFactory
+     */
     public function __construct(
         protected FactoryInterface          $factory,
         protected int                       $maxPoolSize,
