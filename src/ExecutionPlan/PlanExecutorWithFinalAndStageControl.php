@@ -19,7 +19,7 @@ final class PlanExecutorWithFinalAndStageControl extends PlanExecutorWithStageCo
         array                    $stages,
         callable                 $stageSetter,
         HandlerExecutorInterface $handlerExecutor,
-        ...$parameters
+        mixed ...$parameters
     ): void {
         if ($stages === []) {
             return;

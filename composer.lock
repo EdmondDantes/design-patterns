@@ -666,16 +666,16 @@
         },
         {
             "name": "ifcastle/codestyle",
-            "version": "v0.1.7",
+            "version": "v0.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EdmondDantes/ifcastle-codestyle.git",
-                "reference": "b009a6a00a548ed5906094ca12e7068461451dec"
+                "reference": "fa56473e946ebd99bdb04888f2425bff8a97c674"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EdmondDantes/ifcastle-codestyle/zipball/b009a6a00a548ed5906094ca12e7068461451dec",
-                "reference": "b009a6a00a548ed5906094ca12e7068461451dec",
+                "url": "https://api.github.com/repos/EdmondDantes/ifcastle-codestyle/zipball/fa56473e946ebd99bdb04888f2425bff8a97c674",
+                "reference": "fa56473e946ebd99bdb04888f2425bff8a97c674",
                 "shasum": ""
             },
             "require": {
@@ -701,9 +701,9 @@
             ],
             "support": {
                 "issues": "https://github.com/EdmondDantes/ifcastle-codestyle/issues",
-                "source": "https://github.com/EdmondDantes/ifcastle-codestyle/tree/v0.1.7"
+                "source": "https://github.com/EdmondDantes/ifcastle-codestyle/tree/v0.1.8"
             },
-            "time": "2024-10-26T13:56:03+00:00"
+            "time": "2024-11-02T07:19:17+00:00"
         },
         {
             "name": "myclabs/deep-copy",

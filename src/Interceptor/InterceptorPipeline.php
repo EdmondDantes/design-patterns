@@ -20,9 +20,11 @@ class InterceptorPipeline implements InterceptorPipelineInterface
     protected bool $isStopped       = false;
 
     protected \WeakReference|null $mainContext = null;
+    
     protected self|null $nextContext = null;
 
     protected mixed $result         = null;
+    
     protected bool $hasResult       = false;
 
     public function __construct(
@@ -69,6 +71,7 @@ class InterceptorPipeline implements InterceptorPipelineInterface
 
         $this->nextContext          = $clone;
         $clone->nextContext         = null;
+        
         $clone->arguments           = $arguments;
         $clone->result              = null;
 

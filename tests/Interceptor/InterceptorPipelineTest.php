@@ -12,6 +12,7 @@ class InterceptorPipelineTest extends TestCase
     {
         $interceptor1 = new class implements InterceptorInterface {
             public bool $wasCalled = false;
+            
             public function intercept(InterceptorPipelineInterface $pipeline): void
             {
                 $this->wasCalled = true;
@@ -21,6 +22,7 @@ class InterceptorPipelineTest extends TestCase
 
         $interceptor2 = new class implements InterceptorInterface {
             public bool $wasCalled = false;
+            
             public function intercept(InterceptorPipelineInterface $pipeline): void
             {
                 $this->wasCalled = true;
@@ -42,6 +44,7 @@ class InterceptorPipelineTest extends TestCase
     {
         $interceptor1 = new class implements InterceptorInterface {
             public bool $wasCalled = false;
+            
             public function intercept(InterceptorPipelineInterface $pipeline): void
             {
                 $this->wasCalled = true;
@@ -52,6 +55,7 @@ class InterceptorPipelineTest extends TestCase
 
         $interceptor2 = new class implements InterceptorInterface {
             public bool $wasCalled = false;
+            
             public function intercept(InterceptorPipelineInterface $pipeline): void
             {
                 $this->wasCalled = true;
@@ -73,6 +77,7 @@ class InterceptorPipelineTest extends TestCase
     {
         $interceptor1 = new class implements InterceptorInterface {
             public bool $wasCalled = false;
+            
             public function intercept(InterceptorPipelineInterface $pipeline): void
             {
                 $this->wasCalled = true;
@@ -88,6 +93,7 @@ class InterceptorPipelineTest extends TestCase
 
         $interceptor2 = new class implements InterceptorInterface {
             public bool $wasCalled = false;
+            
             public function intercept(InterceptorPipelineInterface $pipeline): void
             {
                 $this->wasCalled = true;

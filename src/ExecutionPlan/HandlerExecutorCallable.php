@@ -6,6 +6,7 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 
 final class HandlerExecutorCallable implements HandlerExecutorInterface
 {
+    #[\Override]
     public function executeHandler(mixed $handler, string $stage, mixed ...$parameters): mixed
     {
         if (\is_callable($handler)) {

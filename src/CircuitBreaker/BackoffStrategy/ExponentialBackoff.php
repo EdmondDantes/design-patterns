@@ -27,13 +27,14 @@ final readonly class ExponentialBackoff implements BackoffStrategyInterface
      * @param int $failureAttempts The number of failure attempts.
      * @return float The delay time in seconds before the next attempt.
      */
+    #[\Override]
     public function calculateDelay(int $failureAttempts): float
     {
-        $baseDelay                  = (int) ($this->initialDelay * \pow($this->factor, $failureAttempts));
+        $baseDelay                  = (int) ($this->initialDelay * $this->factor ** $failureAttempts);
         $baseDelay                  = \min($baseDelay, $this->maxDelay);
 
         // Add jitter: a random value between -$jitter and +$jitter
-        $jitterValue                = \rand(-(int) $this->jitter * 1000, (int) $this->jitter * 1000) / 1000;
+        $jitterValue                = random_int(-(int) $this->jitter * 1000, (int) $this->jitter * 1000) / 1000;
         $delayWithJitter            = $baseDelay + $jitterValue;
 
         // Ensure the delay is not less than zero

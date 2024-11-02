@@ -9,6 +9,7 @@ use IfCastle\DesignPatterns\CircuitBreaker\InvocationTrackingInterface;
 final class TimeWindowBackoff implements BackoffStrategyInterface, InvocationTrackingInterface
 {
     private int $lastFailureTime = 0;
+    
     private int $failureAttempts = 0;
 
     /**
@@ -41,6 +42,7 @@ final class TimeWindowBackoff implements BackoffStrategyInterface, InvocationTra
         $this->failureAttempts++;
     }
 
+    #[\Override]
     public function calculateDelay(int $failureAttempts): float
     {
         if ($this->failureAttempts === 0 || (\time() - $this->lastFailureTime) > $this->timeWindow) {

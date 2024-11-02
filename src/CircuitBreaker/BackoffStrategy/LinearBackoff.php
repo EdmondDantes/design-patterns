@@ -13,6 +13,7 @@ final readonly class LinearBackoff implements BackoffStrategyInterface
      */
     public function __construct(private float $initialDelay = 1.0, private float $increment = 1.0, private float $maxDelay = 30.0) {}
 
+    #[\Override]
     public function calculateDelay(int $failureAttempts): float
     {
         return \min($this->initialDelay + ($failureAttempts * $this->increment), $this->maxDelay);

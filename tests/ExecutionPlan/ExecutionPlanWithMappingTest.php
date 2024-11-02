@@ -22,7 +22,7 @@ class ExecutionPlanWithMappingTest extends TestCase
         };
 
         $hashHandler1               = new class ($printer) implements HandlerWithHashInterface {
-            public function __construct(private mixed $printer) {}
+            public function __construct(private readonly mixed $printer) {}
 
             public function __invoke(): void
             {
@@ -37,7 +37,7 @@ class ExecutionPlanWithMappingTest extends TestCase
         };
 
         $hashHandler2               = new class ($printer) implements HandlerWithHashInterface {
-            public function __construct(private mixed $printer) {}
+            public function __construct(private readonly mixed $printer) {}
 
             public function __invoke(): void
             {

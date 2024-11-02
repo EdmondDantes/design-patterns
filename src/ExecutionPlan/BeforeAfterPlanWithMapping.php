@@ -13,6 +13,7 @@ use IfCastle\Exceptions\BaseException;
 class BeforeAfterPlanWithMapping extends ExecutionPlanWithMapping implements BeforeAfterActionInterface
 {
     public const string BEFORE      = '-';
+    
     public const string AFTER       = '+';
 
     #[\Override]
@@ -51,7 +52,7 @@ class BeforeAfterPlanWithMapping extends ExecutionPlanWithMapping implements Bef
                 ]);
             }
 
-            $position               = \array_search($action, \array_keys($this->stages));
+            $position               = \array_search($action, \array_keys($this->stages), true);
 
             $this->stages           = \array_merge(
                 \array_slice($this->stages, 0, $position, true),
@@ -86,7 +87,7 @@ class BeforeAfterPlanWithMapping extends ExecutionPlanWithMapping implements Bef
                 ]);
             }
 
-            $position               = \array_search($action, \array_keys($this->stages));
+            $position               = \array_search($action, \array_keys($this->stages), true);
 
             $this->stages           = \array_merge(
                 \array_slice($this->stages, 0, $position + 1, true),

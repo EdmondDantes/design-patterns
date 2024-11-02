@@ -11,6 +11,7 @@ use IfCastle\DesignPatterns\CircuitBreaker\CircuitBreakerInterface;
 final readonly class IntervalRunner implements IntervalRunnerInterface
 {
     private mixed $function;
+    
     private CircuitBreakerInterface $circuitBreaker;
 
     public function __construct(
@@ -22,6 +23,7 @@ final readonly class IntervalRunner implements IntervalRunnerInterface
         $this->circuitBreaker       = $circuitBreaker ?? new CircuitBreaker(new ExponentialBackoff());
     }
 
+    #[\Override]
     public function tryInvoke(?callable $function = null): void
     {
         $function ??= $this->function;
@@ -42,16 +44,19 @@ final readonly class IntervalRunner implements IntervalRunnerInterface
         }
     }
 
+    #[\Override]
     public function shouldInvoke(): bool
     {
         return $this->circuitBreaker->canBeInvoked() && ((\time() - $this->circuitBreaker->getInvocationStat()->getLastCalledAt()) >= $this->interval);
     }
 
+    #[\Override]
     public function isSuccessful(): bool
     {
         return $this->circuitBreaker->getInvocationStat()->getFailureCount() === 0;
     }
 
+    #[\Override]
     public function getLastInvocationTime(): int
     {
         return $this->circuitBreaker->getInvocationStat()->getLastCalledAt();

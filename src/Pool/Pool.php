@@ -10,6 +10,7 @@ use IfCastle\DI\DisposableInterface;
 class Pool implements PoolInterface
 {
     private array $borrowed         = [];
+    
     private int   $lastBorrowAt     = 0;
 
     public function __construct(
@@ -29,6 +30,7 @@ class Pool implements PoolInterface
         }
     }
 
+    #[\Override]
     public function borrow(): object|null
     {
         if (\count($this->borrowed) >= $this->maxPoolSize) {
@@ -57,6 +59,7 @@ class Pool implements PoolInterface
         return $decorator;
     }
 
+    #[\Override]
     public function return(object $object): void
     {
         if (false === \array_key_exists(\spl_object_id($object), $this->borrowed)) {
@@ -93,32 +96,38 @@ class Pool implements PoolInterface
         }
     }
 
+    #[\Override]
     public function rebuild(): void
     {
         $this->stack->clear();
         $this->borrowed             = [];
     }
 
+    #[\Override]
     public function getMaxPoolSize(): int
     {
         return $this->maxPoolSize;
     }
 
+    #[\Override]
     public function getMinPoolSize(): int
     {
         return $this->minPoolSize;
     }
 
+    #[\Override]
     public function getMaxWaitTimeout(): int
     {
         return 0;
     }
 
+    #[\Override]
     public function getUsed(): int
     {
         return \count($this->borrowed);
     }
 
+    #[\Override]
     public function getPoolSize(): int
     {
         return $this->stack->getSize();

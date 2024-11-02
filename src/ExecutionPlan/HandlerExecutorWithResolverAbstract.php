@@ -14,6 +14,7 @@ use IfCastle\DI\ResolverInterface;
 class HandlerExecutorWithResolverAbstract implements HandlerExecutorInterface
 {
     protected ContainerInterface|\WeakReference|null $container = null;
+    
     protected ResolverInterface $resolver;
 
     #[\Override]
