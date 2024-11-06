@@ -34,7 +34,7 @@ final class PlanExecutorWithFinalAndStageControl extends PlanExecutorWithStageCo
                 $stages,
                 $stageSetter,
                 $handlerExecutor,
-                $parameters
+                ...$parameters
             );
         } catch (\Throwable $exception) {
             $errors[]               = $exception;
