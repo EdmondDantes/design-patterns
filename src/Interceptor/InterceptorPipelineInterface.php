@@ -37,9 +37,14 @@ interface InterceptorPipelineInterface
     public function getResult(): mixed;
 
     /**
-     * @return InterceptorInterface<T>|null
+     * @return InterceptorPipelineInterface<T>|null
      */
-    public function getLastInterceptor(): ?InterceptorInterface;
+    public function getLastContext(): ?InterceptorPipelineInterface;
+
+    /**
+     * @return array<mixed>
+     */
+    public function getLastArguments(): array;
 
     public function setResult(mixed $result): static;
 
