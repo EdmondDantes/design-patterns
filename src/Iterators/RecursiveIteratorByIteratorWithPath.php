@@ -30,7 +30,6 @@ class RecursiveIteratorByIteratorWithPath implements
 
     /**
      * @param \RecursiveIterator<TKey, TValue> $currentIterator
-     * @param bool $isSelfFirst
      */
     public function __construct(protected \RecursiveIterator $currentIterator, protected bool $isSelfFirst = true) {}
 

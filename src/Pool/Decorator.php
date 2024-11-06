@@ -16,7 +16,7 @@ final class Decorator implements DecoratorInterface, DisposableInterface
      * @var \WeakReference<object>|null
      */
     private \WeakReference|null $pool;
-    
+
     /**
      * @param T|null   $originalObject
      * @param PoolInterface<T> $pool
@@ -32,10 +32,8 @@ final class Decorator implements DecoratorInterface, DisposableInterface
     }
 
     /**
-     * @param string $name
      * @param array<mixed> $arguments
      *
-     * @return mixed
      */
     public function __call(string $name, array $arguments): mixed
     {

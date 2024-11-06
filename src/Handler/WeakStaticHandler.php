@@ -17,7 +17,7 @@ final readonly class WeakStaticHandler implements InvokableInterface
      * @var callable(object $self, mixed ...$args): mixed $handler
      */
     private mixed $handler;
-    
+
     /**
      * @var \WeakReference<object> $object
      */

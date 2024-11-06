@@ -11,7 +11,7 @@ use IfCastle\DesignPatterns\CircuitBreaker\CircuitBreakerInterface;
 final readonly class IntervalRunner implements IntervalRunnerInterface
 {
     private mixed $function;
-    
+
     private CircuitBreakerInterface $circuitBreaker;
 
     public function __construct(

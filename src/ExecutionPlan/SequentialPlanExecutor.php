@@ -12,8 +12,7 @@ final class SequentialPlanExecutor implements PlanExecutorInterface
         callable                 $stageSetter,
         HandlerExecutorInterface $handlerExecutor,
         mixed                    ...$parameters
-    ): void
-    {
+    ): void {
         foreach ($stages as $stage => $handlers) {
 
             if ($handlers === []) {

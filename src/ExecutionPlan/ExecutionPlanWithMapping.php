@@ -12,7 +12,7 @@ use IfCastle\Exceptions\UnexpectedMethodMode;
 class ExecutionPlanWithMapping extends ExecutionPlan implements ExecutionPlanWithMappingInterface
 {
     protected bool $forbidDuplicateHandlers = true;
-    
+
     /**
      * @var array<string, callable[]>
      */

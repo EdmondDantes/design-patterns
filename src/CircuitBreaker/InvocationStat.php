@@ -7,15 +7,15 @@ namespace IfCastle\DesignPatterns\CircuitBreaker;
 class InvocationStat implements InvocationStatInterface
 {
     protected int $lastCalledAt     = 0;
-    
+
     protected int $lastSuccessAt    = 0;
-    
+
     protected int $failureCount     = 0;
-    
+
     protected int $successCount     = 0;
-    
+
     protected int $totalCount       = 0;
-    
+
     protected int $totalFailureCount = 0;
 
     public function __construct(?callable $tracingSetter = null)

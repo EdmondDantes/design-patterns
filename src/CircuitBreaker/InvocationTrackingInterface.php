@@ -7,6 +7,6 @@ namespace IfCastle\DesignPatterns\CircuitBreaker;
 interface InvocationTrackingInterface
 {
     public function registerSuccess(): void;
-    
+
     public function registerFailure(): void;
 }

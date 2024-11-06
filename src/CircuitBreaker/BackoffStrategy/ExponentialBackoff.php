@@ -34,7 +34,7 @@ final readonly class ExponentialBackoff implements BackoffStrategyInterface
         $baseDelay                  = \min($baseDelay, $this->maxDelay);
 
         // Add jitter: a random value between -$jitter and +$jitter
-        $jitterValue                = random_int(-(int) $this->jitter * 1000, (int) $this->jitter * 1000) / 1000;
+        $jitterValue                = \random_int(-(int) $this->jitter * 1000, (int) $this->jitter * 1000) / 1000;
         $delayWithJitter            = $baseDelay + $jitterValue;
 
         // Ensure the delay is not less than zero

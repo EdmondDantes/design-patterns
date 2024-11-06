@@ -9,11 +9,11 @@ use IfCastle\DesignPatterns\CircuitBreaker\BackoffStrategy\BackoffStrategyInterf
 class CircuitBreaker implements CircuitBreakerInterface
 {
     protected CircuitBreakerStateEnum $state = CircuitBreakerStateEnum::CLOSED;
-    
+
     protected InvocationStatInterface $invocationStat;
-    
+
     protected float $currentDelay   = 0.0;
-    
+
     protected mixed $setter;
 
     public function __construct(

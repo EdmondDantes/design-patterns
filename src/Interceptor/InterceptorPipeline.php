@@ -24,18 +24,22 @@ class InterceptorPipeline implements InterceptorPipelineInterface
      * @var \WeakReference<InterceptorPipelineInterface<T>>|null $mainContext
      */
     protected \WeakReference|null $mainContext = null;
-    
+
     /**
      * @var InterceptorPipelineInterface<T>|null $nextContext
      */
     protected InterceptorPipelineInterface|null $nextContext = null;
 
     protected mixed $result         = null;
-    
+
     protected bool $hasResult       = false;
 
     /**
-     * @param object $target
+     * @var \WeakReference<InterceptorPipelineInterface<T>>|null $lastContext
+     */
+    protected \WeakReference|null $lastContext = null;
+
+    /**
      * @param array<mixed> $arguments
      * @param InterceptorInterface<T> ...$interceptors
      */
@@ -48,6 +52,7 @@ class InterceptorPipeline implements InterceptorPipelineInterface
 
         foreach ($interceptors as $interceptor) {
 
+            $this->lastContext     = \WeakReference::create($nextContext);
             $interceptor->intercept($nextContext);
 
             if ($this->isStopped) {
@@ -83,7 +88,7 @@ class InterceptorPipeline implements InterceptorPipelineInterface
 
         $this->nextContext          = $clone;
         $clone->nextContext         = null;
-        
+
         $clone->arguments           = $arguments;
         $clone->result              = null;
 
@@ -108,6 +113,12 @@ class InterceptorPipeline implements InterceptorPipelineInterface
         }
 
         return $this->result;
+    }
+
+    #[\Override]
+    public function getLastInterceptor(): ?InterceptorInterface
+    {
+        return $this->lastContext?->get()->getLastInterceptor();
     }
 
     #[\Override]

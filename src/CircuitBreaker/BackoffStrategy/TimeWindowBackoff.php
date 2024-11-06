@@ -9,7 +9,7 @@ use IfCastle\DesignPatterns\CircuitBreaker\InvocationTrackingInterface;
 final class TimeWindowBackoff implements BackoffStrategyInterface, InvocationTrackingInterface
 {
     private int $lastFailureTime = 0;
-    
+
     private int $failureAttempts = 0;
 
     /**

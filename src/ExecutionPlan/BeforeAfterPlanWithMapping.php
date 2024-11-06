@@ -13,7 +13,7 @@ use IfCastle\Exceptions\BaseException;
 class BeforeAfterPlanWithMapping extends ExecutionPlanWithMapping implements BeforeAfterActionInterface
 {
     public const string BEFORE      = '-';
-    
+
     public const string AFTER       = '+';
 
     #[\Override]

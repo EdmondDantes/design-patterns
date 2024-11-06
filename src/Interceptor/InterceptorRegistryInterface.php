@@ -10,9 +10,7 @@ interface InterceptorRegistryInterface
      * Register an interceptor for a given interface.
      *
      * @param string|string[] $interface
-     * @param object $interceptor
      *
-     * @return static
      */
     public function registerInterceptor(string|array $interface, object $interceptor): static;
 
@@ -20,9 +18,7 @@ interface InterceptorRegistryInterface
      * Register an interceptor for a given interface.
      *
      * @param string|string[] $interface
-     * @param string $class
      *
-     * @return static
      */
     public function registerInterceptorConstructible(string|array $interface, string $class): static;
 
@@ -30,16 +26,13 @@ interface InterceptorRegistryInterface
      * Register an interceptor for a given interface.
      *
      * @param string|string[] $interface
-     * @param string $class
      *
-     * @return static
      */
     public function registerInterceptorInjectable(string|array $interface, string $class): static;
 
     /**
      * Resolve interceptors for a given interface.
      *
-     * @param string $interface
      *
      * @return InterceptorInterface<object>[]
      */

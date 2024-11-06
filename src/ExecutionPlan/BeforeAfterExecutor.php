@@ -7,9 +7,9 @@ namespace IfCastle\DesignPatterns\ExecutionPlan;
 class BeforeAfterExecutor extends ExecutionPlan implements BeforeAfterExecutorInterface
 {
     public const string BEFORE       = '-';
-    
+
     public const string MAIN         = '*';
-    
+
     public const string AFTER        = '+';
 
     public function __construct(HandlerExecutorInterface $handlerExecutor)

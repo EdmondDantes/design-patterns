@@ -19,12 +19,12 @@ interface InterceptorPipelineInterface
      * @return T
      */
     public function getTarget(): object;
-    
+
     /**
      * @return array<mixed>
      */
     public function getArguments(): array;
-    
+
     /**
      * @param array<mixed> $arguments
      *
@@ -35,6 +35,11 @@ interface InterceptorPipelineInterface
     public function hasResult(): bool;
 
     public function getResult(): mixed;
+
+    /**
+     * @return InterceptorInterface<T>|null
+     */
+    public function getLastInterceptor(): ?InterceptorInterface;
 
     public function setResult(mixed $result): static;
 

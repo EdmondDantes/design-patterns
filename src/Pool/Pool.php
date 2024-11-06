@@ -14,19 +14,15 @@ use IfCastle\DI\DisposableInterface;
 class Pool implements PoolInterface
 {
     /**
-     * List of decorated objects<T>
+     * List of decorated objects<T>.
      * @var T[]
      */
     private array $borrowed         = [];
-    
+
     private int   $lastBorrowAt     = 0;
 
     /**
      * @param FactoryInterface<T>       $factory
-     * @param int                       $maxPoolSize
-     * @param int                       $minPoolSize
-     * @param int                       $timeout
-     * @param int                       $delayPoolReduction
      * @param StackInterface<T>         $stack
      * @param ReturnFactoryInterface<T> $returnFactory
      */
