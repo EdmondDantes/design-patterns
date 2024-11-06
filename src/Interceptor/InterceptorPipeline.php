@@ -115,12 +115,17 @@ class InterceptorPipeline implements InterceptorPipelineInterface
         return $this->result;
     }
 
-    #[\Override]
-    public function getLastContext(): ?InterceptorPipelineInterface
+    /**
+     * @return InterceptorPipelineInterface<T>
+     */
+    public function getLastContext(): InterceptorPipelineInterface
     {
-        return $this->lastContext?->get()->getLastContext();
+        return $this->lastContext?->get() ?? $this;
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getLastArguments(): array
     {
         $lastContext                = $this->lastContext?->get();
