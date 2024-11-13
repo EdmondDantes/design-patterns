@@ -34,7 +34,7 @@ interface InterceptorRegistryInterface
      * Resolve interceptors for a given interface.
      *
      *
-     * @return InterceptorInterface<covariant object>[]
+     * @return InterceptorInterface<object>[]
      */
     public function resolveInterceptors(string $interface): array;
 }
