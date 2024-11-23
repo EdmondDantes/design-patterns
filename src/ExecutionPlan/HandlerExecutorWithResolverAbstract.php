@@ -36,7 +36,9 @@ class HandlerExecutorWithResolverAbstract implements HandlerExecutorInterface
         if ($handler instanceof AutoResolverInterface) {
             $handler->resolveDependencies($this->container);
         } elseif ($handler instanceof DependencyInterface) {
-            $handler                = $this->resolver->resolveDependency($handler, $this->container);
+            $handler                = $this->resolver->resolveDependency(
+                $handler, $this->container, $handler->getDependencyName(), $handler->getDependencyName()
+            );
         }
 
         try {

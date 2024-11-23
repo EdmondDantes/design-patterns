@@ -46,7 +46,7 @@ class KeyValueContext implements \ArrayAccess, \IteratorAggregate, ImmutableInte
 
         return $this->context[$offset] ?? null;
     }
-    
+
     /**
      * @throws LogicalException
      */
@@ -61,7 +61,7 @@ class KeyValueContext implements \ArrayAccess, \IteratorAggregate, ImmutableInte
 
         $this->context[$offset] = $value;
     }
-    
+
     /**
      * @throws LogicalException
      */
